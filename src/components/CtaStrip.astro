@@ -1,0 +1,136 @@
+---
+import { Image } from 'astro:assets';
+import ctaBg from '../assets/images/community/community-exterior.jpg';
+
+const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
+const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hola Voltag! 💪 Quiero empezar a entrenar ya.')}`;
+---
+
+<section class="cta-strip" id="cta-strip">
+  <div class="cta-strip__bg">
+    <Image
+      src={ctaBg}
+      alt=""
+      width={1920}
+      height={600}
+      quality={70}
+      format="webp"
+      class="cta-strip__bg-img"
+    />
+  </div>
+  <div class="cta-strip__overlay"></div>
+  <div class="cta-strip__watermark">VOLTAG</div>
+  <div class="container cta-strip__inner">
+    <div class="cta-strip__content reveal">
+      <h2 class="cta-strip__title">¿Qué Esperas Para <span>Empezar?</span></h2>
+      <p class="cta-strip__text">
+        Tu mejor versión está a un mensaje de distancia. Escríbenos y empieza hoy mismo.
+      </p>
+    </div>
+    <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary cta-strip__btn reveal" id="cta-strip-btn">
+      Escríbenos al WhatsApp
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<style>
+  .cta-strip {
+    position: relative;
+    padding: 100px 0;
+    overflow: hidden;
+  }
+
+  .cta-strip__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .cta-strip__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.3) saturate(0.5);
+  }
+
+  .cta-strip__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(212, 25, 32, 0.85) 0%, rgba(168, 17, 26, 0.9) 50%, rgba(5, 5, 5, 0.8) 100%);
+    z-index: 1;
+  }
+
+  .cta-strip__watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: clamp(8rem, 20vw, 16rem);
+    color: rgba(255, 255, 255, 0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    z-index: 2;
+  }
+
+  .cta-strip__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .cta-strip__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--white-pure);
+    line-height: 1.05;
+    margin-bottom: 8px;
+  }
+
+  .cta-strip__title span {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 6px;
+  }
+
+  .cta-strip__text {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 460px;
+  }
+
+  .cta-strip__btn {
+    text-decoration: none;
+    background: var(--black-pure);
+    color: var(--white);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .cta-strip__btn:hover {
+    background: var(--white-pure);
+    color: var(--black-pure);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 900px) {
+    .cta-strip {
+      padding: 70px 0;
+    }
+
+    .cta-strip__inner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .cta-strip__text {
+      max-width: 100%;
+    }
+  }
+</style>

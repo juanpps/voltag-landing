@@ -1,0 +1,257 @@
+---
+import { Image } from 'astro:assets';
+import imgFreeTraining from '../assets/images/gallery/gym-hexlights.jpg';
+import imgPersonal from '../assets/images/gallery/garcia-personal-training.jpg';
+import imgNutrition from '../assets/images/gallery/garcia-reception.jpg';
+import imgSupplements from '../assets/images/gallery/gallery-supplements.jpg';
+import imgCardio from '../assets/images/gallery/gallery-machines.jpg';
+import imgCommunity from '../assets/images/community/community-hug.jpg';
+
+const services = [
+  {
+    num: '01',
+    title: 'Entrenamiento Libre',
+    description: 'Acceso completo a todos los equipos de musculación, peso libre y máquinas de grado comercial.',
+    image: imgFreeTraining,
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5h11M6.5 17.5h11M2 12h2M20 12h2M6 6.5V4M6 20v-2.5M18 6.5V4M18 20v-2.5M6 12V6.5M18 12V6.5M6 17.5V12M18 17.5V12"/></svg>`,
+  },
+  {
+    num: '02',
+    title: 'Personal Trainer',
+    description: 'Entrenadores certificados diseñan tu rutina personalizada para alcanzar tus metas más rápido.',
+    image: imgPersonal,
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+  },
+  {
+    num: '03',
+    title: 'Planes Nutricionales',
+    description: 'Plan de alimentación diseñado para potenciar tus resultados y mantenerlos a largo plazo.',
+    image: imgNutrition,
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
+  },
+  {
+    num: '04',
+    title: 'Suplementación',
+    description: 'Proteínas, creatina, pre-entrenos y más al alcance de tu mano — directo en el gym.',
+    image: imgSupplements,
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  },
+  {
+    num: '05',
+    title: 'Cardio & Funcional',
+    description: 'Bicicletas, elípticas y espacio abierto para circuitos funcionales de alta intensidad.',
+    image: imgCardio,
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>`,
+  },
+  {
+    num: '06',
+    title: 'Comunidad Activa',
+    description: 'Más que un gym, somos familia. Eventos, retos mensuales y la motivación que necesitas.',
+    image: imgCommunity,
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>`,
+  },
+];
+---
+
+<section class="services" id="servicios">
+  <div class="container">
+    <div class="services__header reveal">
+      <div class="section-badge">Servicios</div>
+      <h2 class="section-title">Todo Lo Que <span>Necesitas</span></h2>
+      <p class="section-subtitle">
+        Equipos de primer nivel, entrenamiento personalizado y una comunidad 
+        que te impulsa. Todo bajo un mismo techo en Manzanares.
+      </p>
+    </div>
+
+    <div class="services__grid reveal-stagger reveal">
+      {services.map((service) => (
+        <div class="services__card">
+          <div class="services__card-bg">
+            <Image
+              src={service.image}
+              alt={service.title}
+              width={400}
+              height={300}
+              quality={70}
+              format="webp"
+              class="services__card-img"
+            />
+          </div>
+          <div class="services__card-overlay"></div>
+          <div class="services__card-content">
+            <div class="services__card-header">
+              <span class="services__card-num">{service.num}</span>
+              <span class="services__card-icon" set:html={service.icon} />
+            </div>
+            <h3 class="services__card-title">{service.title}</h3>
+            <p class="services__card-desc">{service.description}</p>
+          </div>
+          <div class="services__card-glow"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    background: var(--black-pure);
+  }
+
+  .services__header {
+    margin-bottom: 56px;
+  }
+
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .services__card {
+    position: relative;
+    min-height: 320px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.5s var(--transition);
+  }
+
+  .services__card:hover {
+    transform: translateY(-8px);
+  }
+
+  .services__card-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .services__card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--transition), filter 0.5s;
+    filter: saturate(0.6) brightness(0.7);
+  }
+
+  .services__card:hover .services__card-img {
+    transform: scale(1.1);
+    filter: saturate(1) brightness(0.9);
+  }
+
+  .services__card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 30%,
+      rgba(5, 5, 5, 0.6) 70%,
+      rgba(5, 5, 5, 0.95) 100%
+    );
+    z-index: 1;
+    transition: background 0.5s;
+  }
+
+  .services__card:hover .services__card-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(212, 25, 32, 0.15) 0%,
+      rgba(212, 25, 32, 0.05) 30%,
+      rgba(5, 5, 5, 0.6) 70%,
+      rgba(5, 5, 5, 0.98) 100%
+    );
+  }
+
+  .services__card-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 28px 24px;
+  }
+
+  .services__card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .services__card-num {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.06);
+    line-height: 1;
+  }
+
+  .services__card-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--red);
+    background: rgba(212, 25, 32, 0.1);
+    border: 1px solid rgba(212, 25, 32, 0.2);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    transition: all 0.4s;
+  }
+
+  .services__card:hover .services__card-icon {
+    background: rgba(212, 25, 32, 0.2);
+    border-color: rgba(212, 25, 32, 0.4);
+    transform: scale(1.1);
+  }
+
+  .services__card-title {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .services__card-desc {
+    font-size: 0.85rem;
+    color: var(--gray);
+    line-height: 1.7;
+    transition: color 0.3s;
+  }
+
+  .services__card:hover .services__card-desc {
+    color: var(--gray-light);
+  }
+
+  .services__card-glow {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--red-intense));
+    z-index: 3;
+    transition: width 0.6s var(--transition);
+  }
+
+  .services__card:hover .services__card-glow {
+    width: 100%;
+    box-shadow: 0 0 20px var(--red-glow);
+  }
+
+  @media (max-width: 900px) {
+    .services__grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .services__card {
+      min-height: 260px;
+    }
+  }
+</style>

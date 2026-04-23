@@ -1,0 +1,235 @@
+---
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { db } from '../utils/firebase.client';
+
+let whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
+let plans = [];
+
+// SSR Timeout limit (1 second) to maintain fast page loads for SEO and avoid blocking if Firebase is down
+const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1000));
+
+try {
+  const globalRef = doc(db, 'configuracion', 'global');
+  const globalSnap = await Promise.race([getDoc(globalRef), timeoutPromise]);
+  if (globalSnap && globalSnap.exists() && globalSnap.data().whatsapp) {
+    whatsappNumber = globalSnap.data().whatsapp;
+  }
+} catch(e) { /* fallback active */ }
+
+try {
+  const querySnapshot = await Promise.race([getDocs(collection(db, "planes")), timeoutPromise]);
+  if (querySnapshot && !querySnapshot.empty) {
+    querySnapshot.forEach((doc) => {
+      plans.push({ id: doc.id, ...doc.data() });
+    });
+    plans.sort((a,b) => a.id.localeCompare(b.id)); // naturally sort 01_, 02_, etc.
+  }
+} catch (e) { /* fallback active */ }
+
+if (plans.length === 0) {
+  plans = [
+    { id: '01_dia', name: 'Día', price: '10K', period: '/día', featured: false, badge: null, features: ['Acceso por 1 día', 'Zonas cardio y musculación', 'Asesoría básica'], ctaText: 'Entrenar Hoy', whatsappMsg: '¡Hola Voltag! 💪 Quiero pagar y entrenar por el DÍA.', delay: '0' },
+    { id: '02_semana', name: 'Semana', price: '30K', period: '/semana', featured: false, badge: null, features: ['Acceso por 7 días', 'Zonas cardio y musculación', 'Asesoría continua'], ctaText: 'Ir 1 Semana', whatsappMsg: '¡Hola Voltag! 💪 Quiero inscribirme por 1 SEMANA.', delay: '50' },
+    { id: '03_quincena', name: 'Quincena', price: '40K', period: '/quincena', featured: false, badge: null, features: ['Acceso por 15 días', 'Zonas cardio y musculación', 'Asesoría continua'], ctaText: 'Ir Quincena', whatsappMsg: '¡Hola Voltag! 💪 Quiero inscribirme por 1 QUINCENA.', delay: '100' },
+    { id: '04_mes', name: 'Mes', price: '69K', period: '/mes', featured: true, badge: 'Popular', features: ['Todo incluido', 'Acceso completo al horario', 'Planificación básica'], ctaText: 'Ir Mensual', whatsappMsg: '¡Hola Voltag! 💪 Me interesa el plan MENSUAL.', delay: '150' },
+    { id: '05_4meses', name: '4 Meses', price: '250K', period: '/4 meses', featured: false, badge: null, features: ['Todo del plan mensual', 'Descuento aplicado', 'Planificación avanzada'], ctaText: 'Inscribirme', whatsappMsg: '¡Hola Voltag! 🔥 Me interesa el plan de 4 MESES.', delay: '200' },
+    { id: '06_semestre', name: 'Semestre', price: '350K', period: '/semestre', featured: false, badge: 'Mejor Valor', features: ['Ahorras más a largo plazo', 'Beneficios completos Voltag'], ctaText: 'Inscribirme', whatsappMsg: '¡Hola Voltag! ⚡ Me interesa el plan SEMESTRAL.', delay: '250' },
+    { id: '07_pareja', name: 'Plan Pareja', price: '65K', period: 'c/u por mes', featured: false, badge: 'Dúo', features: ['Aplica viniendo juntos', 'Disfrutan todos los beneficios'], ctaText: 'Ir en Pareja', whatsappMsg: '¡Hola Voltag! 👥 Nos interesa el PLAN PAREJA.', delay: '300' }
+  ];
+}
+
+/* Premium checkmark SVG */
+const checkIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`;
+---
+
+<section class="plans" id="planes">
+  <div class="container">
+    <div class="plans__header reveal">
+      <div class="section-badge">Planes</div>
+      <h2 class="section-title">Elige Tu <span>Plan</span></h2>
+      <p class="section-subtitle">
+        Planes diseñados para que empieces sin excusas. Elige el que más 
+        se adapte a tu compromiso y lleva tu entrenamiento al siguiente nivel.
+      </p>
+    </div>
+
+    <div class="plans__grid">
+      {plans.map((plan, i) => (
+        <div class={`plans__card ${plan.featured ? 'plans__card--featured' : ''} reveal`} style={`transition-delay: ${i * 0.12}s`}>
+          {plan.badge && (
+            <div class="plans__card-badge">{plan.badge}</div>
+          )}
+          <div class="plans__card-header">
+            <h3 class="plans__card-name">{plan.name}</h3>
+            <div class="plans__card-price">
+              <span class="plans__card-currency">$</span>
+              <span class="plans__card-amount">{plan.price}</span>
+              <span class="plans__card-period">{plan.period}</span>
+            </div>
+          </div>
+
+          <ul class="plans__card-features">
+            {plan.features.map(feature => (
+              <li class="plans__card-feature">
+                <span class="plans__card-feature-icon" set:html={checkIcon} />
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(plan.whatsappMsg)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`btn ${plan.featured ? 'btn-primary' : 'btn-secondary'} plans__card-cta`}
+            id={`plan-cta-${plan.name.toLowerCase()}`}
+          >
+            {plan.ctaText}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .plans {
+    background: var(--dark);
+  }
+
+  .plans__header {
+    margin-bottom: 48px;
+  }
+
+  .plans__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .plans__card {
+    background: var(--dark-card);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 40px 32px;
+    position: relative;
+    transition: all 0.4s var(--transition);
+  }
+
+  .plans__card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .plans__card--featured {
+    background: linear-gradient(to bottom, rgba(230, 57, 70, 0.08), var(--dark-card));
+    border-color: var(--red);
+    transform: scale(1.05);
+    z-index: 2;
+  }
+
+  .plans__card--featured:hover {
+    transform: scale(1.05) translateY(-6px);
+    border-color: var(--red);
+    box-shadow: var(--glow-shadow);
+  }
+
+  .plans__card-badge {
+    position: absolute;
+    top: -1px;
+    right: 24px;
+    background: var(--red);
+    padding: 6px 16px;
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white-pure);
+  }
+
+  .plans__card-header {
+    margin-bottom: 32px;
+  }
+
+  .plans__card-name {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 12px;
+  }
+
+  .plans__card-price {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+  }
+
+  .plans__card-currency {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  .plans__card-amount {
+    font-family: var(--font-display);
+    font-size: 3.2rem;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .plans__card-period {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-left: 4px;
+  }
+
+  .plans__card-features {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  .plans__card-feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.875rem;
+    color: var(--gray-light);
+  }
+
+  .plans__card-feature-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .plans__card-cta {
+    text-decoration: none;
+    width: 100%;
+    justify-content: center;
+  }
+
+  @media (max-width: 900px) {
+    .plans__grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .plans__card--featured {
+      transform: none;
+      order: -1;
+    }
+
+    .plans__card--featured:hover {
+      transform: translateY(-6px);
+    }
+  }
+</style>

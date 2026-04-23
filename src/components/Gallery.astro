@@ -1,0 +1,186 @@
+---
+import { Image } from 'astro:assets';
+import gallery1 from '../assets/images/gallery/gallery-equipment.jpg';
+import gallery2 from '../assets/images/gallery/gallery-machines.jpg';
+import gallery3 from '../assets/images/gallery/gallery-supplements.jpg';
+import gallery4 from '../assets/images/gallery/gallery-weights.jpg';
+import gallery5 from '../assets/images/gallery/gallery-training.jpg';
+import gallery6 from '../assets/images/gallery/garcia-brand.jpg';
+import gallery7 from '../assets/images/gallery/gym-hexlights.jpg';
+import gallery8 from '../assets/images/gallery/merch-shirts.jpg';
+
+const images = [
+  { src: gallery6, alt: 'Coach García con la marca Voltag Gym', label: 'Voltag Brand', class: 'gallery__item--wide' },
+  { src: gallery1, alt: 'Equipos profesionales con iluminación hexagonal', label: 'Equipos Pro', class: '' },
+  { src: gallery3, alt: 'Estación de suplementos y bebidas deportivas', label: 'Suplementos', class: '' },
+  { src: gallery4, alt: 'Rack completo de mancuernas', label: 'Mancuernas', class: 'gallery__item--tall' },
+  { src: gallery7, alt: 'Luces hexagonales y paredes rojas del gym', label: 'Ambiente', class: '' },
+  { src: gallery2, alt: 'Zona de máquinas y peso libre', label: 'Máquinas', class: '' },
+  { src: gallery8, alt: 'Merchendising oficial Voltag Gym', label: 'Merch', class: '' },
+  { src: gallery5, alt: 'Zona de entrenamiento activo con miembros', label: 'Entrenamiento', class: 'gallery__item--wide' },
+];
+---
+
+<section class="gallery" id="instalaciones">
+  <div class="container">
+    <div class="gallery__header reveal">
+      <div class="section-badge">Instalaciones</div>
+      <h2 class="section-title">Conoce Nuestro <span>Espacio</span></h2>
+      <p class="section-subtitle">
+        Dos pisos equipados con todo lo que necesitas. Iluminación hexagonal, 
+        paredes rojas, ambiente profesional y la energía que te motiva.
+      </p>
+    </div>
+
+    <div class="gallery__grid reveal-stagger reveal">
+      {images.map((img) => (
+        <div class={`gallery__item ${img.class}`}>
+          <Image
+            src={img.src}
+            alt={img.alt}
+            width={600}
+            height={400}
+            quality={75}
+            format="webp"
+            class="gallery__img"
+          />
+          <div class="gallery__overlay"></div>
+          <div class="gallery__label">{img.label}</div>
+          <div class="gallery__corner"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery {
+    background: var(--black-pure);
+  }
+
+  .gallery__header {
+    margin-bottom: 48px;
+  }
+
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 220px;
+    gap: 8px;
+  }
+
+  .gallery__item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .gallery__item--wide {
+    grid-column: span 2;
+  }
+
+  .gallery__item--tall {
+    grid-row: span 2;
+  }
+
+  .gallery__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.7s var(--transition);
+    filter: saturate(0.7) brightness(0.85);
+  }
+
+  .gallery__item:hover .gallery__img {
+    transform: scale(1.1);
+    filter: saturate(1) brightness(0.7);
+  }
+
+  .gallery__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5,5,5,0.7), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .gallery__item:hover .gallery__overlay {
+    opacity: 1;
+  }
+
+  .gallery__label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 14px 18px;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    transform: translateY(100%);
+    transition: transform 0.4s var(--transition);
+    z-index: 2;
+  }
+
+  .gallery__item:hover .gallery__label {
+    transform: translateY(0);
+  }
+
+  .gallery__corner {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid var(--red);
+    border-right: 2px solid var(--red);
+    opacity: 0;
+    transition: opacity 0.4s, transform 0.4s;
+    transform: translate(10px, -10px);
+    z-index: 2;
+  }
+
+  .gallery__item:hover .gallery__corner {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  @media (max-width: 900px) {
+    .gallery__grid {
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: 200px;
+    }
+
+    .gallery__item--wide {
+      grid-column: span 2;
+    }
+
+    .gallery__item--tall {
+      grid-row: span 1;
+    }
+
+    .gallery__label {
+      transform: translateY(0);
+      font-size: 0.65rem;
+    }
+
+    .gallery__corner {
+      opacity: 0.4;
+      transform: translate(0, 0);
+    }
+  }
+
+  @media (max-width: 500px) {
+    .gallery__grid {
+      grid-template-columns: 1fr;
+      grid-auto-rows: 220px;
+    }
+
+    .gallery__item--wide {
+      grid-column: span 1;
+    }
+  }
+</style>

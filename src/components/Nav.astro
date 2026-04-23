@@ -1,0 +1,307 @@
+---
+import { Image } from 'astro:assets';
+import logoImg from '../assets/images/logo/logo-white.png';
+
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../utils/firebase.client';
+
+let whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
+
+const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1000));
+
+try {
+  const globalRef = doc(db, 'configuracion', 'global');
+  const globalSnap = await Promise.race([getDoc(globalRef), timeoutPromise]);
+  if (globalSnap && globalSnap.exists() && globalSnap.data().whatsapp) {
+    whatsappNumber = globalSnap.data().whatsapp;
+  }
+} catch(e) { /* fallback active */ }
+
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hola Voltag! 💪 Quiero inscribirme al gym.')}`;
+
+const navLinks = [
+  { label: 'Nosotros', href: '#nosotros' },
+  { label: 'Instalaciones', href: '#instalaciones' },
+  { label: 'Servicios', href: '#servicios' },
+  { label: 'Planes', href: '#planes' },
+  { label: 'Ubicación', href: '#ubicacion' },
+];
+---
+
+<nav class="nav" id="main-nav">
+  <div class="nav__inner container">
+    <a href="#" class="nav__logo" aria-label="Voltag Gym - Inicio">
+      <Image
+        src={logoImg}
+        alt="Voltag Gym Logo"
+        width={140}
+        height={50}
+        quality={90}
+        class="nav__logo-img"
+      />
+      <span class="nav__logo-text">VOLTAG<span class="nav__logo-accent">GYM</span></span>
+    </a>
+
+    <ul class="nav__links" id="nav-links">
+      {navLinks.map(link => (
+        <li><a href={link.href} class="nav__link">{link.label}</a></li>
+      ))}
+    </ul>
+
+    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary nav__cta" id="nav-cta">
+      Únete ahora
+    </a>
+
+    <button class="nav__hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="nav__mobile" id="nav-mobile">
+    <ul class="nav__mobile-links">
+      {navLinks.map(link => (
+        <li><a href={link.href} class="nav__mobile-link">{link.label}</a></li>
+      ))}
+    </ul>
+    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary nav__mobile-cta">
+      Únete ahora
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.getElementById('main-nav');
+    const hamburger = document.getElementById('nav-hamburger');
+    const mobileMenu = document.getElementById('nav-mobile');
+    const mobileLinks = document.querySelectorAll('.nav__mobile-link');
+
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+      if (nav) {
+        nav.classList.toggle('nav--scrolled', currentScroll > 60);
+        nav.classList.toggle('nav--hidden', currentScroll > lastScroll && currentScroll > 300);
+      }
+      lastScroll = currentScroll;
+    });
+
+    hamburger?.addEventListener('click', () => {
+      const isOpen = mobileMenu?.classList.toggle('nav__mobile--open');
+      hamburger.classList.toggle('nav__hamburger--active');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu?.classList.remove('nav__mobile--open');
+        hamburger?.classList.remove('nav__hamburger--active');
+        document.body.style.overflow = '';
+      });
+    });
+  });
+</script>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all 0.4s var(--transition);
+    background: transparent;
+  }
+
+  .nav--scrolled {
+    background: rgba(5, 5, 5, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(212, 25, 32, 0.25);
+  }
+
+  .nav--hidden {
+    transform: translateY(-100%);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--nav-height);
+  }
+
+  .nav__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    z-index: 10;
+  }
+
+  .nav__logo-img {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(1.1);
+    transition: filter 0.3s;
+  }
+
+  .nav__logo:hover .nav__logo-img {
+    filter: brightness(1.3);
+  }
+
+  .nav__logo-text {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--white);
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+
+  .nav__logo-accent {
+    color: var(--red);
+    margin-left: 1px;
+  }
+
+  .nav__links {
+    display: flex;
+    gap: 32px;
+  }
+
+  .nav__link {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s;
+  }
+
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--red);
+    transition: width 0.3s var(--transition);
+  }
+
+  .nav__link:hover {
+    color: var(--white);
+  }
+
+  .nav__link:hover::after {
+    width: 100%;
+  }
+
+  .nav__cta {
+    font-size: 0.75rem;
+    padding: 10px 24px;
+    text-decoration: none;
+  }
+
+  .nav__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 10;
+  }
+
+  .nav__hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    transition: all 0.3s;
+    transform-origin: center;
+  }
+
+  .nav__hamburger--active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .nav__hamburger--active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav__hamburger--active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  .nav__mobile {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.97);
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+    z-index: 5;
+  }
+
+  .nav__mobile--open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .nav__mobile-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .nav__mobile-link {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 3px;
+    transition: color 0.3s;
+  }
+
+  .nav__mobile-link:hover {
+    color: var(--red);
+  }
+
+  .nav__mobile-cta {
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 14px 36px;
+  }
+
+  @media (max-width: 900px) {
+    .nav__links,
+    .nav__cta {
+      display: none;
+    }
+
+    .nav__hamburger {
+      display: flex;
+    }
+
+    .nav__logo-img {
+      height: 34px;
+    }
+  }
+</style>
