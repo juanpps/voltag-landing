@@ -55,15 +55,20 @@ export default function PromotionsModule() {
     setMessage('');
     try {
       const savePromise = setDoc(doc(db, 'configuracion', 'promociones'), promo);
-      const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000));
+      // Increased timeout to 10 seconds for robustness
+      const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000));
       await Promise.race([savePromise, timeoutPromise]);
       setMessage('✅ Promociones guardadas exitosamente.');
     } catch (err) {
       console.error(err);
-      setMessage('❌ Error al guardar. Revisa permisos de Firebase.');
+      if (err.message === 'timeout') {
+        setMessage('❌ La conexión con Google tardó demasiado. Reintenta.');
+      } else {
+        setMessage('❌ Error al guardar. Revisa tus permisos o conexión.');
+      }
     } finally {
       setSaving(false);
-      setTimeout(() => setMessage(''), 3000);
+      setTimeout(() => setMessage(''), 5000);
     }
   };
 

@@ -109,9 +109,9 @@ export default function DashboardLayout() {
       <main style={styles.main} className="admin-main">
         <Routes>
           <Route path="/" element={<Overview />} />
-          <Route path="/promotions" element={<PromotionsModule />} />
-          <Route path="/plans" element={<PlansModule />} />
-          <Route path="/settings" element={<SettingsModule />} />
+          <Route path="promotions" element={<PromotionsModule />} />
+          <Route path="plans" element={<PlansModule />} />
+          <Route path="settings" element={<SettingsModule />} />
         </Routes>
       </main>
     </div>
