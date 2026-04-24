@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '../../utils/firebase.client';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db, auth, storage } from '../../utils/firebase.client';
 
 export default function PromotionsModule() {
   const [promo, setPromo] = useState({
@@ -15,23 +16,19 @@ export default function PromotionsModule() {
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
     async function loadData() {
       try {
         const docRef = doc(db, 'configuracion', 'promociones');
-        
-        const fetchPromise = getDoc(docRef);
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2000));
-        
-        const docSnap = await Promise.race([fetchPromise, timeoutPromise]);
-        
-        if (docSnap && docSnap.exists()) {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
           setPromo(prev => ({...prev, ...docSnap.data()}));
         }
       } catch (err) {
-        console.error("Error loading promos (might be offline):", err);
+        console.error("Error loading promos:", err);
       } finally {
         setLoading(false);
       }
@@ -39,14 +36,34 @@ export default function PromotionsModule() {
     loadData();
   }, []);
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (evt) => {
-      setPromo(prev => ({...prev, modalImage: evt.target.result}));
-    };
-    reader.readAsDataURL(file);
+
+    // VALIDATION: Prevent giant files if needed, but Storage handles it.
+    // However, let's keep it under 5MB for web performance.
+    if (file.size > 5 * 1024 * 1024) {
+      alert("La imagen es demasiado pesada. Intenta con una de menos de 5MB.");
+      return;
+    }
+
+    setUploading(true);
+    setMessage('Subiendo imagen...');
+
+    try {
+      const storageRef = ref(storage, `promos/modal_${Date.now()}_${file.name}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      
+      setPromo(prev => ({...prev, modalImage: downloadURL}));
+      setMessage('✅ Imagen subida correctamente.');
+    } catch (err) {
+      console.error("Storage Error:", err);
+      setMessage('❌ Error al subir imagen. Revisa permisos de Storage.');
+    } finally {
+      setUploading(false);
+      setTimeout(() => setMessage(''), 3000);
+    }
   };
 
   const handleSave = async (e) => {
@@ -54,18 +71,11 @@ export default function PromotionsModule() {
     setSaving(true);
     setMessage('');
     try {
-      const savePromise = setDoc(doc(db, 'configuracion', 'promociones'), promo);
-      // Increased timeout to 10 seconds for robustness
-      const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 10000));
-      await Promise.race([savePromise, timeoutPromise]);
+      await setDoc(doc(db, 'configuracion', 'promociones'), promo);
       setMessage('✅ Promociones guardadas exitosamente.');
     } catch (err) {
       console.error(err);
-      if (err.message === 'timeout') {
-        setMessage('❌ La conexión con Google tardó demasiado. Reintenta.');
-      } else {
-        setMessage('❌ Error al guardar. Revisa tus permisos o conexión.');
-      }
+      setMessage('❌ Error al guardar. Revisa conexión.');
     } finally {
       setSaving(false);
       setTimeout(() => setMessage(''), 5000);
@@ -129,8 +139,15 @@ export default function PromotionsModule() {
           
           <div style={styles.inputGroup}>
             <label style={styles.label}>Imagen Promocional (Se subirá a la Base de Datos)</label>
-            <input type="file" accept="image/*" onChange={handleImageUpload} style={styles.input} disabled={!promo.modalActive}/>
-            {promo.modalImage && (
+            <input 
+              type="file" 
+              accept="image/*" 
+              onChange={handleImageUpload} 
+              style={styles.input} 
+              disabled={!promo.modalActive || uploading}
+            />
+            {uploading && <div style={{ color: '#d41920', fontSize: '0.8rem' }}>Subiendo archivo...</div>}
+            {promo.modalImage && !uploading && (
               <div style={{ position: 'relative', marginTop: '10px', display: 'inline-block' }}>
                 <img src={promo.modalImage} alt="Preview" style={{ height: '120px', objectFit: 'contain', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)', background: '#000' }} />
                 <button 
