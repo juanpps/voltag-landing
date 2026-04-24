@@ -1,10 +1,12 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
+  site: 'https://voltag-gym.com',
   output: 'static',
-  integrations: [react()],
+  integrations: [react(), sitemap()],
   adapter: vercel(),
   vite: {
     ssr: {

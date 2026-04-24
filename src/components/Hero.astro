@@ -30,9 +30,10 @@ const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hol
     </div>
 
     <h1 class="hero__title">
-      Activa Tu<br />
-      <span>Poder Interior</span>
+      Gimnasio en<br />
+      <span>Manzanares</span>
     </h1>
+    <p class="hero__eyebrow">Activa Tu Poder Interior</p>
 
     <p class="hero__subtitle">
       El gimnasio de Manzanares que te empuja a ser mejor cada día. 
@@ -147,6 +148,16 @@ const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hol
   .hero__title span {
     color: var(--red);
     text-shadow: 0 0 80px var(--red-glow-strong);
+  }
+
+  .hero__eyebrow {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    margin: -12px 0 24px 0;
+    opacity: 0.75;
   }
 
   .hero__subtitle {

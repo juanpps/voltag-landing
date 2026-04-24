@@ -5,21 +5,20 @@ import PromoModal from '../components/PromoModal.astro';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
 }
 
 const { 
   title = 'Voltag Gym — Gimnasio en Manzanares Sector 17 | Candelaria, Valle del Cauca', 
-  description = 'Voltag Gym es el mejor gimnasio en Manzanares Sector 17, Ciudad del Valle, Candelaria. Equipos profesionales, entrenadores certificados, suplementos y la mejor comunidad fitness cerca de Cali. Planes desde $70K. ¡Empieza hoy!' 
+  description = 'Voltag Gym es el mejor gimnasio en Manzanares Sector 17, Ciudad del Valle, Candelaria. Equipos profesionales, entrenadores certificados, suplementos y la mejor comunidad fitness cerca de Cali. Planes desde $70K. ¡Empieza hoy!',
+  ogImage = '/og-image.jpg'
 } = Astro.props;
 
 const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
-const siteUrl = Astro.url.origin || 'https://voltag-gym.com';
+const siteUrl = 'https://voltag-gym.com';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = new URL(ogImage, siteUrl).href;
 
-/* ── Local SEO Keywords (Locations Playbook) ──
-   Primary:   gimnasio manzanares, gym manzanares sector 17, gimnasio candelaria
-   Secondary: gimnasio ciudad del valle, gym candelaria valle, gimnasio cerca de cali
-   Broad:     gym al sur de cali, gimnasio valle del cauca, mejor gym candelaria
-*/
 const keywords = 'gimnasio manzanares, gym manzanares sector 17, gimnasio candelaria, gimnasio ciudad del valle, gym candelaria valle del cauca, gimnasio cerca de cali, gym al sur de cali, entrenador personal candelaria, mejor gimnasio candelaria, voltag gym';
 ---
 
@@ -31,7 +30,10 @@ const keywords = 'gimnasio manzanares, gym manzanares sector 17, gimnasio candel
   <meta name="description" content={description} />
   <meta name="keywords" content={keywords} />
   <meta name="author" content="Voltag Gym" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="theme-color" content="#d41920" />
+
+  <!-- Geo Tags (Local SEO) -->
   <meta name="geo.region" content="CO-VAC" />
   <meta name="geo.placename" content="Candelaria, Valle del Cauca" />
   <meta name="geo.position" content="3.4012147;-76.4397344" />
@@ -41,22 +43,33 @@ const keywords = 'gimnasio manzanares, gym manzanares sector 17, gimnasio candel
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={siteUrl} />
+  <meta property="og:url" content={canonicalUrl} />
   <meta property="og:locale" content="es_CO" />
   <meta property="og:site_name" content="Voltag Gym — Manzanares Sector 17" />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Voltag Gym — Gimnasio profesional en Manzanares, Candelaria Valle del Cauca" />
 
-  <!-- Twitter -->
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageUrl} />
 
   <!-- Canonical -->
-  <link rel="canonical" href={siteUrl} />
+  <link rel="canonical" href={canonicalUrl} />
 
-  <!-- Favicon -->
+  <!-- Favicon & Icons -->
   <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
 
-  <!-- Schema.org — GymOrHealthClub + LocalBusiness (Locations Playbook) -->
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://elfsightcdn.com" />
+
+  <!-- Schema.org — GymOrHealthClub + LocalBusiness -->
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": ["GymOrHealthClub", "LocalBusiness"],
@@ -65,22 +78,22 @@ const keywords = 'gimnasio manzanares, gym manzanares sector 17, gimnasio candel
     "description": "El mejor gimnasio en Manzanares Sector 17, Ciudad del Valle, Candelaria. Equipos profesionales, entrenadores certificados, suplementos deportivos y la comunidad fitness más fuerte del sector.",
     "url": siteUrl,
     "telephone": `+${whatsappNumber}`,
-    "image": `${siteUrl}/images/voltag-gym-manzanares.jpg`,
+    "image": `${siteUrl}/og-image.jpg`,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Cl 12 # 20 Oeste - 10",
       "addressLocality": "Candelaria",
       "addressRegion": "Valle del Cauca",
       "addressCountry": "CO",
-      "postalCode": "763042",
-      "areaServed": [
-        { "@type": "Place", "name": "Manzanares Sector 17" },
-        { "@type": "Place", "name": "Ciudad del Valle" },
-        { "@type": "Place", "name": "Candelaria" },
-        { "@type": "Place", "name": "Sur de Cali" },
-        { "@type": "City",  "name": "Cali" }
-      ]
+      "postalCode": "763042"
     },
+    "areaServed": [
+      { "@type": "Place", "name": "Manzanares Sector 17" },
+      { "@type": "Place", "name": "Ciudad del Valle" },
+      { "@type": "Place", "name": "Candelaria" },
+      { "@type": "Place", "name": "Sur de Cali" },
+      { "@type": "City", "name": "Cali" }
+    ],
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": 3.4012147,
@@ -92,8 +105,8 @@ const keywords = 'gimnasio manzanares, gym manzanares sector 17, gimnasio candel
       { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "08:00", "closes": "12:00" }
     ],
     "priceRange": "$$",
-    "paymentAccepted": "Cash, Bank Transfer",
     "currenciesAccepted": "COP",
+    "paymentAccepted": "Cash, Bank Transfer",
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Planes de Membresía",
@@ -120,6 +133,46 @@ const keywords = 'gimnasio manzanares, gym manzanares sector 17, gimnasio candel
     "sameAs": [
       "https://www.instagram.com/voltag_gym",
       "https://www.tiktok.com/@voltag_gym"
+    ]
+  })} />
+
+  <!-- Schema.org — FAQPage (Voice search + Featured Snippets) -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Dónde queda Voltag Gym en Candelaria?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Voltag Gym está ubicado en la Cl 12 # 20 Oeste - 10, Manzanares Sector 17, Ciudad del Valle, Candelaria, Valle del Cauca. Al sur de Cali."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuánto cuestan los planes del gimnasio en Candelaria?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "En Voltag Gym manejamos planes desde $70.000 COP mensuales. También tenemos plan trimestral por $180.000 COP y plan anual por $600.000 COP."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuál es el horario de Voltag Gym?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Voltag Gym abre de lunes a viernes de 5:00 a.m. a 10:00 p.m., sábados de 6:00 a.m. a 4:00 p.m. y domingos de 8:00 a.m. a 12:00 p.m."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Voltag Gym tiene entrenador personal?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Voltag Gym cuenta con entrenadores certificados disponibles para asesoría personalizada, planes de entrenamiento y seguimiento nutricional."
+        }
+      }
     ]
   })} />
 
