@@ -12,28 +12,25 @@ import DashboardLayout from './DashboardLayout';
 export default function AdminApp({ basename = "/admin" }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [unauthorizedEmail, setUnauthorizedEmail] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("Auth state change detected. User:", currentUser?.email);
-      
       const adminEmailsString = import.meta.env.PUBLIC_ADMIN_EMAIL || '';
       const authorizedEmails = adminEmailsString.split(',').map(e => e.trim().toLowerCase());
       
       if (currentUser && currentUser.email) {
         const isAuthorized = authorizedEmails.includes(currentUser.email.toLowerCase());
-        console.log("Checking authorization for:", currentUser.email, "Result:", isAuthorized);
-        
         if (isAuthorized) {
           setUser(currentUser);
+          setUnauthorizedEmail(null);
         } else {
-          console.error("Unauthorized access attempt by:", currentUser.email);
           setUser(null);
-          // Optional: clear the session so they can try a different account
-          auth.signOut();
+          setUnauthorizedEmail(currentUser.email);
         }
       } else {
         setUser(null);
+        setUnauthorizedEmail(null);
       }
       setLoading(false);
     });
@@ -45,6 +42,24 @@ export default function AdminApp({ basename = "/admin" }) {
     return (
       <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#050505', color: '#d41920' }}>
         <h2 style={{ fontFamily: 'var(--font-heading)', letterSpacing: '4px', textTransform: 'uppercase' }}>Cargando Panel...</h2>
+      </div>
+    );
+  }
+
+  // Explicit view for unauthorized users to prevent redirect loops
+  if (unauthorizedEmail) {
+    return (
+      <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: '#050505', color: '#fff', padding: '20px', textAlign: 'center' }}>
+        <h1 style={{ color: '#d41920', marginBottom: '16px' }}>ACCESO DENEGADO</h1>
+        <p style={{ color: '#888', maxWidth: '400px', lineHeight: '1.6' }}>
+          La cuenta <strong>{unauthorizedEmail}</strong> no tiene permisos de administrador.
+        </p>
+        <button 
+          onClick={() => auth.signOut()}
+          style={{ marginTop: '24px', padding: '12px 24px', background: '#d41920', color: '#fff', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}
+        >
+          CERRAR SESIÓN Y PROBAR OTRA CUENTA
+        </button>
       </div>
     );
   }
