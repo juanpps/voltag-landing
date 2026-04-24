@@ -1,52 +1,48 @@
-import React, { useState } from 'react';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import React, { useState, useEffect } from 'react';
+import { signInWithRedirect, getRedirectResult, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../../utils/firebase.client';
 
 export default function Login() {
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); // Start as loading while we check redirect result
+
+  useEffect(() => {
+    const checkRedirect = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result) {
+          const user = result.user;
+          const adminEmailsString = import.meta.env.PUBLIC_ADMIN_EMAIL || '';
+          const authorizedEmails = adminEmailsString.split(',').map(e => e.trim().toLowerCase());
+          
+          if (!user.email || !authorizedEmails.includes(user.email.toLowerCase())) {
+            setError('Acceso denegado: El correo seleccionado no está autorizado.');
+            await auth.signOut();
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        setError('Ocurrió un error al procesar el inicio de sesión.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkRedirect();
+  }, []);
 
   const handleGoogleLogin = async () => {
-    // FIX: Must invoke the popup synchronously within the generic JS event loop 
-    // BEFORE React async batching destroys the "trusted user gesture" context.
-    const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: 'select_account' });
-    const loginPromise = signInWithPopup(auth, provider);
-
     setError('');
     setLoading(true);
 
     try {
-      const result = await loginPromise;
-      const user = result.user;
-      
-      const adminEmailsString = import.meta.env.PUBLIC_ADMIN_EMAIL || '';
-      const authorizedEmails = adminEmailsString.split(',').map(e => e.trim().toLowerCase());
-      
-      if (!user.email || !authorizedEmails.includes(user.email.toLowerCase())) {
-        setError('Acceso denegado: El correo seleccionado no está autorizado.');
-        await auth.signOut();
-      }
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+      await signInWithRedirect(auth, provider);
+      // The page will redirect away here
     } catch (err) {
       console.error(err);
-      if (err.code === 'auth/popup-blocked') {
-        setError('Tu navegador bloqueó la ventana de Google. Por favor, dale permiso de "Pop-ups/Ventanas emergentes" arriba en la barra de direcciones y vuelve a intentar.');
-      } else {
-        setError('Ocurrió un error al iniciar sesión con Google.');
-      }
-    } finally {
+      setError('Ocurrió un error al intentar ir a Google.');
       setLoading(false);
-    }
-  };
-
-  const handleTestPopup = () => {
-    const testWin = window.open('about:blank', '_blank', 'width=100,height=100');
-    if (!testWin || testWin.closed || typeof testWin.closed === 'undefined') {
-      alert("Aún sigue bloqueado. Por favor, mira la pequeña 'X' roja en la barra de direcciones de tu navegador (arriba a la derecha) y dale a 'Permitir'.");
-    } else {
-      testWin.close();
-      alert("¡Excelente! Has dado el permiso correctamente. Ahora haz clic en 'Iniciar sesión con Google'.");
-      setError('');
     }
   };
 
@@ -56,26 +52,14 @@ export default function Login() {
       
       <div style={styles.card}>
         <div style={styles.logoContainer}>
-          {/* We rely on the global Voltag red for accents */}
           <h1 style={styles.logoText}>VOLTAG<span style={styles.logoAccent}>GYM</span></h1>
           <p style={styles.subtitle}>Panel de Administración</p>
         </div>
 
         {error && (
-          <div style={{...styles.errorBox, flexDirection: 'column', alignItems: 'flex-start'}}>
-            <div style={{display: 'flex', gap: '12px', alignItems: 'center', marginBottom: error.includes('bloqueada') ? '12px' : '0'}}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-              <span>{error}</span>
-            </div>
-            {error.includes('bloqueó la ventana') && (
-              <button 
-                type="button"
-                onClick={handleTestPopup}
-                style={styles.permissionBtn}
-              >
-                1. Haz clic aquí para solicitar permiso
-              </button>
-            )}
+          <div style={styles.errorBox}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span>{error}</span>
           </div>
         )}
 
@@ -92,7 +76,7 @@ export default function Login() {
               <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
-            {loading ? 'Verificando con Google...' : 'Continuar con Google'}
+            {loading ? 'Cerrando sesión...' : 'Continuar con Google'}
           </button>
         </div>
       </div>
