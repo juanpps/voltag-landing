@@ -1,0 +1,170 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { competitors } from '../../data/competitors';
+
+export function getStaticPaths() {
+  return competitors.map((comp) => {
+    return {
+      params: { competitor: comp.slug },
+      props: { competitorData: comp },
+    };
+  });
+}
+
+const { competitorData } = Astro.props;
+
+// Meta tags optimizadas
+const title = `¿Buscando ir a ${competitorData.name}? | Descubre Voltag Gym en Candelaria`;
+const description = `Antes de inscribirte en ${competitorData.name} ${competitorData.locationPhrase}, conoce por qué atletas de la zona están cambiando a Voltag Gym. Mensualidad desde $70.000.`;
+
+// WhatsApp CTA con variable
+const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
+const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`¡Hola Voltag! Estaba buscando gimnasios en la zona y me interesa conocer sus instalaciones y promo.`)}`;
+---
+
+<Layout title={title} description={description}>
+  <!-- Advertencia de disonancia (Loss Aversion / Re-evaluation hook) -->
+  <header class="vs-hero">
+    <div class="vs-hero__overlay"></div>
+    <div class="container vs-hero__content">
+      <div class="vs-badge">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Revisión Independiente
+      </div>
+      <h1 class="vs-title">
+        ¿A punto de inscribirte en <br /><span>{competitorData.name}</span>?
+      </h1>
+      <p class="vs-subtitle">
+        Pausá un segundo. Antes de comprometer tus próximos meses de entrenamiento, 
+        compara opciones. En Voltag Gym te garantizamos {competitorData.voltagAdvantage}
+      </p>
+      
+      <div class="vs-ctas">
+        <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="vs-cta-hero">
+          Ver planes de Voltag desde $70.000
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Tabla Comparativa Psicologica -->
+  <section class="vs-compare">
+    <div class="container">
+      <div class="section-badge">La Realidad</div>
+      <h2 class="section-title">Voltag Gym vs <span>La Mayoría de Gimnasios</span></h2>
+      <p class="vs-disclaimer">
+        Sabemos que {competitorData.name} es una opción respetable {competitorData.locationPhrase}. 
+        Pero si te tomas tu cuerpo en serio, necesitas un espacio profesional.
+      </p>
+
+      <div class="table-container">
+        <table class="vs-table">
+          <thead>
+            <tr>
+              <th>Característica</th>
+              <th class="col-voltag">⚡ Voltag Gym</th>
+              <th class="col-other">Gimnasios Promedio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Entrenador guiándote desde el Día 1</td>
+              <td class="col-voltag check">Sí, incluido en el plan</td>
+              <td class="col-other warning">Suele cobrarse como "Personalizado"</td>
+            </tr>
+            <tr>
+              <td>Estado de las máquinas y pesas</td>
+              <td class="col-voltag check">Nuevas, lubricadas y selectorizadas</td>
+              <td class="col-other warning">Cables oxidados o desajustadas</td>
+            </tr>
+            <tr>
+              <td>Congestión en horas pico</td>
+              <td class="col-voltag check">Flujo inteligente (tenemos 2 pisos)</td>
+              <td class="col-other cross">Esperar 20 min por una polea</td>
+            </tr>
+            <tr>
+              <td>Contratos y matrículas ocultas</td>
+              <td class="col-voltag check">Cero. Pagas tu mes y entrenas.</td>
+              <td class="col-other cross">Cláusulas de permanencia anuales</td>
+            </tr>
+            <tr>
+              <td>Ambiente y Comunidad</td>
+              <td class="col-voltag check">Cero Egos. Nos motivamos todos.</td>
+              <td class="col-other warning">Miradas incómodas y competencia</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Bar / Alternativa -->
+  <section class="vs-proof">
+    <div class="container vs-proof__inner">
+      <div class="vs-proof__text">
+        <h3>Tu mensualidad rinde más en Manzanares Sector 17</h3>
+        <p>Decenas de personas de todo Candelaria se han pasado a Voltag y afirman que valió la pena buscar un lugar certificado. <strong>No pagues más por menos.</strong></p>
+      </div>
+      <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large">
+        Escribirles por WhatsApp ahora
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+/* Hero */
+.vs-hero {
+  position: relative; min-height: 55vh; display: flex; align-items: center;
+  background: linear-gradient(135deg, rgba(8,8,8,0.98) 0%, rgba(50,10,15,0.85) 100%),
+    url('/og-image.jpg') center / cover no-repeat;
+  padding-top: calc(var(--nav-height) + 40px); padding-bottom: 60px;
+}
+.vs-hero__overlay { position: absolute; inset: 0; background: #000; opacity: 0.6; }
+.vs-hero__content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; text-align: center; }
+.vs-badge {
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--red);
+  background: rgba(212,25,32,0.1); border: 1px solid rgba(212,25,32,0.3);
+  padding: 6px 16px; margin-bottom: 24px; border-radius: 4px;
+}
+.vs-badge svg { width: 16px; height: 16px; }
+.vs-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; color: var(--white); margin-bottom: 24px; text-transform: uppercase; }
+.vs-title span { color: var(--gray); text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: 4px; }
+.vs-subtitle { font-size: 1.05rem; color: var(--gray-light); line-height: 1.7; margin-bottom: 32px; }
+.vs-ctas { display: flex; justify-content: center; }
+
+/* Compare Table */
+.vs-compare { background: var(--black); padding: 80px 0; }
+.vs-compare .section-title { text-align: center; margin-bottom: 16px; }
+.vs-compare .section-badge { margin: 0 auto 16px; display: table; }
+.vs-disclaimer { text-align: center; color: var(--gray); font-size: 0.95rem; max-width: 600px; margin: 0 auto 40px auto; line-height: 1.6; }
+
+.table-container { overflow-x: auto; max-width: 900px; margin: 0 auto; background: var(--dark-card); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+.vs-table { width: 100%; border-collapse: collapse; text-align: left; }
+.vs-table th, .vs-table td { padding: 20px 24px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.vs-table th { font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gray); background: rgba(0,0,0,0.3); }
+.vs-table td { font-size: 0.95rem; color: var(--white); }
+.vs-table td:first-child { font-weight: 500; }
+.col-voltag { border-left: 2px solid var(--red); border-right: 2px solid var(--red); background: rgba(212,25,32,0.05); }
+.col-voltag.check { color: #4ade80; font-weight: bold; }
+.col-voltag.check::before { content: '✓ '; }
+.col-other { color: var(--gray); }
+.col-other.warning { color: #fbbf24; }
+.col-other.cross { color: #ef4444; }
+.col-other.cross::before { content: '✕ '; }
+
+/* Proof Bottom */
+.vs-proof { background: linear-gradient(90deg, var(--dark-surface), var(--black)); padding: 60px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.vs-proof__inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.vs-proof__text h3 { font-family: var(--font-heading); font-size: 1.4rem; color: var(--white); margin-bottom: 8px; }
+.vs-proof__text p { font-size: 0.95rem; color: var(--gray-light); line-height: 1.5; max-width: 600px; }
+.vs-proof__text strong { color: var(--red); }
+
+@media (max-width: 768px) {
+  .vs-table th, .vs-table td { padding: 16px; font-size: 0.85rem; }
+  .vs-proof__inner { flex-direction: column; text-align: center; }
+  .btn-large { width: 100%; justify-content: center; }
+}
+</style>
