@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, auth, storage } from '../../utils/firebase.client';
+import { db } from '../../utils/firebase.client';
 
 export default function PromotionsModule() {
   const [promo, setPromo] = useState({
@@ -16,7 +15,7 @@ export default function PromotionsModule() {
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [uploading, setUploading] = useState(false);
+  const [compressing, setCompressing] = useState(false);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -36,32 +35,59 @@ export default function PromotionsModule() {
     loadData();
   }, []);
 
+  const compressAndSetImage = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+
+          // Max dimensions: 1024px
+          const MAX_SIZE = 1024;
+          if (width > height) {
+            if (width > MAX_SIZE) {
+              height *= MAX_SIZE / width;
+              width = MAX_SIZE;
+            }
+          } else {
+            if (height > MAX_SIZE) {
+              width *= MAX_SIZE / height;
+              height = MAX_SIZE;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Compress to JPEG with 0.7 quality
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+          resolve(dataUrl);
+        };
+      };
+    });
+  };
+
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // VALIDATION: Prevent giant files if needed, but Storage handles it.
-    // However, let's keep it under 5MB for web performance.
-    if (file.size > 5 * 1024 * 1024) {
-      alert("La imagen es demasiado pesada. Intenta con una de menos de 5MB.");
-      return;
-    }
-
-    setUploading(true);
-    setMessage('Subiendo imagen...');
-
+    setCompressing(true);
     try {
-      const storageRef = ref(storage, `promos/modal_${Date.now()}_${file.name}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
-      
-      setPromo(prev => ({...prev, modalImage: downloadURL}));
-      setMessage('✅ Imagen subida correctamente.');
+      const compressedDataUrl = await compressAndSetImage(file);
+      setPromo(prev => ({...prev, modalImage: compressedDataUrl}));
+      setMessage('✅ Imagen comprimida y lista.');
     } catch (err) {
-      console.error("Storage Error:", err);
-      setMessage('❌ Error al subir imagen. Revisa permisos de Storage.');
+      console.error(err);
+      setMessage('❌ Error al procesar imagen.');
     } finally {
-      setUploading(false);
+      setCompressing(false);
       setTimeout(() => setMessage(''), 3000);
     }
   };
@@ -75,7 +101,11 @@ export default function PromotionsModule() {
       setMessage('✅ Promociones guardadas exitosamente.');
     } catch (err) {
       console.error(err);
-      setMessage('❌ Error al guardar. Revisa conexión.');
+      if (err.message?.includes('longer than')) {
+        setMessage('❌ La imagen sigue siendo muy pesada. Intenta con otra.');
+      } else {
+        setMessage('❌ Error al guardar.');
+      }
     } finally {
       setSaving(false);
       setTimeout(() => setMessage(''), 5000);
@@ -144,10 +174,10 @@ export default function PromotionsModule() {
               accept="image/*" 
               onChange={handleImageUpload} 
               style={styles.input} 
-              disabled={!promo.modalActive || uploading}
+              disabled={!promo.modalActive || compressing}
             />
-            {uploading && <div style={{ color: '#d41920', fontSize: '0.8rem' }}>Subiendo archivo...</div>}
-            {promo.modalImage && !uploading && (
+            {compressing && <div style={{ color: '#d41920', fontSize: '0.8rem' }}>Comprimiendo imagen...</div>}
+            {promo.modalImage && !compressing && (
               <div style={{ position: 'relative', marginTop: '10px', display: 'inline-block' }}>
                 <img src={promo.modalImage} alt="Preview" style={{ height: '120px', objectFit: 'contain', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)', background: '#000' }} />
                 <button 
