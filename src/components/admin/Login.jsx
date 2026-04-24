@@ -1,10 +1,37 @@
-import React, { useState } from 'react';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import React, { useState, useEffect } from 'react';
+import { signInWithRedirect, getRedirectResult, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../../utils/firebase.client';
 
 export default function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Catch the result when coming back from Google redirect
+  useEffect(() => {
+    const handleRedirectResult = async () => {
+      try {
+        setLoading(true);
+        const result = await getRedirectResult(auth);
+        if (result) {
+          const user = result.user;
+          const adminEmailsString = import.meta.env.PUBLIC_ADMIN_EMAIL || '';
+          const authorizedEmails = adminEmailsString.split(',').map(e => e.trim().toLowerCase());
+          
+          if (!user.email || !authorizedEmails.includes(user.email.toLowerCase())) {
+            setError('Acceso denegado: El correo seleccionado no está autorizado.');
+            await auth.signOut();
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        setError('Ocurrió un error al volver del inicio de sesión con Google.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    handleRedirectResult();
+  }, []);
 
   const handleGoogleLogin = async () => {
     setError('');
@@ -12,25 +39,12 @@ export default function Login() {
 
     try {
       const provider = new GoogleAuthProvider();
-      // Allow user to select account always
       provider.setCustomParameters({ prompt: 'select_account' });
-      
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      
-      const adminEmailsString = import.meta.env.PUBLIC_ADMIN_EMAIL || '';
-      const authorizedEmails = adminEmailsString.split(',').map(e => e.trim().toLowerCase());
-      
-      if (!user.email || !authorizedEmails.includes(user.email.toLowerCase())) {
-        setError('Acceso denegado: El correo de Google seleccionado no está autorizado.');
-        // Sign them out immediately so they don't stay logged in with a rejected account
-        await auth.signOut();
-      }
-      // If valid, AdminApp.jsx will catch the auth state change and redirect
+      // Redirects the entire page to Google
+      await signInWithRedirect(auth, provider);
     } catch (err) {
       console.error(err);
-      setError('Ocurrió un error al iniciar sesión con Google.');
-    } finally {
+      setError('Ocurrió un error al intentar redirigir a Google.');
       setLoading(false);
     }
   };
