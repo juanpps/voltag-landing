@@ -71,26 +71,26 @@ export default function DashboardLayout() {
 
         <nav style={styles.nav} className="admin-sidebar-nav">
           <NavLink 
-            to="" 
+            to="/" 
             end
             style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
           >
             Dashboard
           </NavLink>
           <NavLink 
-            to="promotions" 
+            to="/promotions" 
             style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
           >
             Promociones
           </NavLink>
           <NavLink 
-            to="plans" 
+            to="/plans" 
             style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
           >
             Planes
           </NavLink>
           <NavLink 
-            to="settings" 
+            to="/settings" 
             style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
           >
             Redes
