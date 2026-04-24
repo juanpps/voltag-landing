@@ -1,0 +1,151 @@
+---
+const faqs = [
+  {
+    q: "¿Qué horarios tiene el gimnasio?",
+    a: "Abrimos de Lunes a Viernes desde las 5:00 AM hasta las 10:00 PM sin interrupción. Los sábados de 6:00 AM a 4:00 PM y los domingos y festivos de 8:00 AM a 12:00 PM. Siempre hay un entrenador disponible."
+  },
+  {
+    q: "¿Cuánto cuesta la mensualidad y qué incluye?",
+    a: "Nuestra mensualidad base es de $70.000 COP e incluye acceso completo a las instalaciones de los 2 pisos (pesos libres, máquinas selectorizadas y zona cardio), además de acompañamiento constante por parte de nuestros entrenadores de planta."
+  },
+  {
+    q: "¿Necesito pagar matrícula o inscripción?",
+    a: "No. En Voltag Gym creemos en pagos transparentes. Solo pagas tu plan (Mensual, Trimestral, Semestral) y entras inmediatamente. Cero pagos ocultos."
+  },
+  {
+    q: "¿Dónde están ubicados exactamente?",
+    a: "Estamos en Manzanares Sector 17, Dirección: Cl 12 # 20 Oeste - 10, Candelaria. Quedamos a menos de 10 minutos de Poblado Campestre, Arboleda Campestre y Cuidad del Valle."
+  },
+  {
+    q: "Nunca he ido a un gimnasio, ¿me enseñan qué hacer?",
+    a: "¡Totalmente! Es nuestro fuerte. Desde tu primer día, un coach certificado te hará un test diagnóstico básico y te acompañará enseñándote la técnica correcta de cada máquina y ejercicio."
+  }
+];
+---
+
+<section class="faq" id="preguntas-frecuentes">
+  <div class="container faq__grid">
+    <div class="faq__intro reveal">
+      <div class="section-badge">Dudas resueltas</div>
+      <h2 class="section-title">Preguntas<br /><span>Frecuentes</span></h2>
+      <p class="section-subtitle">
+        Todo claro. Sin letras pequeñas ni contratos extraños.
+        Respuestas directas a las dudas comunes de nuestros usuarios en Candelaria.
+      </p>
+    </div>
+
+    <div class="faq__list">
+      {faqs.map((faq, i) => (
+        <details class="faq__item reveal" style={`transition-delay: ${i * 0.1}s`}>
+          <summary class="faq__q">
+            <h3>{faq.q}</h3>
+            <span class="faq__icon">+</span>
+          </summary>
+          <div class="faq__a">
+            <p>{faq.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    background: var(--dark-surface);
+    padding: 100px 0;
+  }
+
+  .faq__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .faq__intro {
+    position: sticky;
+    top: 100px;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .faq__item {
+    background: var(--dark-card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .faq__item:hover {
+    border-color: rgba(212, 25, 32, 0.4);
+  }
+
+  .faq__item[open] {
+    border-color: var(--red);
+  }
+
+  .faq__item[open] .faq__icon {
+    transform: rotate(45deg);
+    color: var(--red);
+  }
+
+  .faq__q {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    cursor: pointer;
+    list-style: none; /* Hide default triangle */
+  }
+
+  .faq__q::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__q h3 {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--white);
+    margin: 0;
+    padding-right: 20px;
+    line-height: 1.4;
+  }
+
+  .faq__icon {
+    font-size: 1.5rem;
+    color: var(--gray);
+    font-weight: 300;
+    transition: all 0.3s ease;
+    line-height: 1;
+  }
+
+  .faq__a {
+    padding: 0 24px 24px;
+    color: var(--gray-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .faq__grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .faq__intro {
+      position: static;
+    }
+  }
+</style>

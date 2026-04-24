@@ -1,0 +1,274 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
+const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hola Voltag! 💪 Soy principiante y quiero empezar a entrenar. ¿Me orientan?')}`;
+---
+
+<Layout
+  title="Gimnasio para Principiantes en Manzanares | Voltag Gym Candelaria"
+  description="¿Nunca has ido al gym? Voltag Gym en Manzanares, Candelaria es el lugar perfecto para empezar. Coaches que te enseñan desde cero. Planes desde $70.000. Sin experiencia necesaria."
+>
+  <header class="persona-hero persona-hero--beginner">
+    <div class="persona-hero__overlay"></div>
+    <div class="container persona-hero__content">
+      <nav class="loc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Voltag Gym</a>
+        <span>›</span>
+        <span>Para Principiantes</span>
+      </nav>
+      <div class="persona-badge">🔰 Sin Experiencia Necesaria</div>
+      <h1 class="persona-hero__title">
+        Gimnasio para<br /><span>Principiantes</span> en Candelaria
+      </h1>
+      <p class="persona-hero__subtitle">
+        No necesitas saber nada para empezar. En Voltag Gym tenemos coaches que te enseñan desde el primer día 
+        — la técnica correcta, el plan ideal y la progresión que realmente funciona.
+      </p>
+      <div class="persona-hero__ctas">
+        <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="beginner-cta-hero">
+          Quiero empezar desde cero →
+        </a>
+        <a href="/gimnasio/" class="btn btn-secondary" id="beginner-zone">Mi zona →</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fear removal section -->
+  <section class="persona-fears">
+    <div class="container">
+      <div class="section-badge">Mitos vs. Realidad</div>
+      <h2 class="section-title">Lo que Crees vs.<br /><span>Lo que Realmente Pasa</span></h2>
+      <div class="persona-fears__grid">
+        {[
+          ['❌ "Se van a reír de mí"', '✅ Nadie te juzga. Todos empezamos desde cero alguna vez.'],
+          ['❌ "No sé qué ejercicios hacer"', '✅ Tu coach te diseña una rutina desde el día 1.'],
+          ['❌ "Me voy a lesionar"', '✅ Aprendes técnica correcta antes de subir el peso.'],
+          ['❌ "Está caro para principiantes"', '✅ Desde $70.000/mes. Sin equipos extras ni costos ocultos.'],
+          ['❌ "Queda lejos"', '✅ En Manzanares Sector 17 — cerca de toda la zona.'],
+          ['❌ "Voy a ir un mes y abandonar"', '✅ Nuestros coaches te dan seguimiento para que no dejes.'],
+        ].map(([myth, reality]) => (
+          <div class="persona-fear-card">
+            <p class="persona-fear-myth">{myth}</p>
+            <p class="persona-fear-reality">{reality}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Journey section -->
+  <section class="persona-journey">
+    <div class="container">
+      <div class="section-badge">Tu Camino</div>
+      <h2 class="section-title">De Principiante a<br /><span>Transformado</span></h2>
+      <div class="persona-journey__steps">
+        {[
+          ['1', 'Primer día', 'Conoces el gym, tus máquinas y a tu coach. Te sentirás cómodo de inmediato.'],
+          ['2', 'Semana 1–2', 'Aprendes la técnica de los ejercicios básicos. Sin peso exagerado — solo correcta ejecución.'],
+          ['3', 'Mes 1', 'Ya tienes tu rutina establecida. Empiezas a sentir la diferencia en energía y cuerpo.'],
+          ['4', 'Mes 3', 'Tu cuerpo habla por ti. Otros ya te preguntan qué estás haciendo.'],
+        ].map(([num, title, desc]) => (
+          <div class="persona-step">
+            <div class="persona-step__num">{num}</div>
+            <div>
+              <strong class="persona-step__title">{title}</strong>
+              <p class="persona-step__desc">{desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- What you'll learn -->
+  <section class="persona-learn">
+    <div class="container">
+      <div class="section-badge">Lo que incluye</div>
+      <h2 class="section-title">Todo lo que Necesitas<br /><span>Para Empezar</span></h2>
+      <div class="persona-learn__grid">
+        {[
+          ['📋', 'Plan de Entrenamiento', 'Rutina diseñada específicamente para tu nivel, objetivos y disponibilidad de tiempo.'],
+          ['🏋️', 'Enseñanza de Técnica', 'Aprende a ejecutar cada ejercicio correctamente para progresar sin riesgos.'],
+          ['🥗', 'Guía de Nutrición', 'Qué comer antes y después de entrenar para maximizar los resultados.'],
+          ['📈', 'Seguimiento de Progreso', 'Tu coach revisa tu avance y ajusta el plan según vas avanzando.'],
+          ['💊', 'Suplementos (opcional)', 'Si quieres proteína u otros suplementos, los tenemos disponibles en el gym.'],
+          ['🤝', 'Comunidad de Apoyo', 'Entrenas rodeado de personas con la misma actitud. La energía es real.'],
+        ].map(([icon, title, desc]) => (
+          <div class="persona-learn-card">
+            <span class="persona-learn-icon">{icon}</span>
+            <h3>{title}</h3>
+            <p>{desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing with mental accounting -->
+  <section class="persona-pricing">
+    <div class="container">
+      <div class="section-badge">Inversión</div>
+      <h2 class="section-title">¿Cuánto Cuesta<br /><span>Empezar a Entrenar?</span></h2>
+      <p class="section-subtitle">Menos de lo que crees. Mucho menos de lo que vale.</p>
+      <div class="persona-pricing__grid">
+        <div class="persona-pricing__card">
+          <h3>Plan Mensual</h3>
+          <div class="persona-pricing__price">$70.000 <span>/mes</span></div>
+          <div class="persona-pricing__math">
+            <span>÷ 30 días</span>
+            <strong>= $2.300 por día</strong>
+            <em>Menos que una materia prima para cocinar</em>
+          </div>
+          <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">Empezar este mes</a>
+        </div>
+        <div class="persona-pricing__card persona-pricing__card--featured">
+          <div class="persona-pricing__badge">⭐ Recomendado</div>
+          <h3>Plan Trimestral</h3>
+          <div class="persona-pricing__price">$180.000 <span>/3 meses</span></div>
+          <div class="persona-pricing__math">
+            <span>÷ 90 días</span>
+            <strong>= $2.000 por día</strong>
+            <em>El tiempo que realmente necesitas para ver cambios</em>
+          </div>
+          <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">Empezar ya</a>
+        </div>
+        <div class="persona-pricing__card">
+          <h3>Plan Día a Día</h3>
+          <div class="persona-pricing__price">$10.000 <span>/día</span></div>
+          <div class="persona-pricing__math">
+            <span>Sin compromiso</span>
+            <strong>Prueba sin riesgo</strong>
+            <em>Ideal para tu primera vez en Voltag</em>
+          </div>
+          <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Ir mañana mismo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="persona-cta">
+    <div class="container persona-cta__inner">
+      <div>
+        <h2>El mejor momento para empezar fue ayer. El segundo mejor momento es hoy.</h2>
+        <p>📍 Cl 12 # 20 Oeste - 10 · Manzanares Sector 17 · Candelaria</p>
+      </div>
+      <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="beginner-final-cta">
+        Escribir a Voltag Gym →
+      </a>
+    </div>
+  </section>
+
+  <!-- Internal links -->
+  <section class="persona-links">
+    <div class="container">
+      <h3 class="persona-links__title">También puede interesarte</h3>
+      <div class="persona-links__grid">
+        <a href="/entrenamiento/mujeres/" class="persona-links__card">👩 Gym para Mujeres</a>
+        <a href="/entrenamiento/bajar-de-peso/" class="persona-links__card">⚡ Bajar de Peso</a>
+        <a href="/gimnasio/" class="persona-links__card">📍 Gym por tu Zona</a>
+        <a href="/#servicios" class="persona-links__card">🏋️ Nuestros Servicios</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+.persona-hero {
+  position: relative; min-height: 65vh; display: flex; align-items: center;
+  background: linear-gradient(135deg, rgba(5,5,5,0.97) 0%, rgba(10,40,80,0.6) 100%),
+    url('/og-image.jpg') center / cover no-repeat;
+  padding-top: calc(var(--nav-height) + 60px); padding-bottom: 80px;
+}
+.persona-hero__overlay { position: absolute; inset: 0; background: #000; opacity: 0.55; }
+.persona-hero__content { position: relative; z-index: 2; }
+.loc-breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--gray); margin-bottom: 20px; }
+.loc-breadcrumb a { color: var(--gray-light); }
+.loc-breadcrumb a:hover { color: var(--red); }
+.persona-badge {
+  display: inline-block; font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--red);
+  background: rgba(212,25,32,0.1); border: 1px solid rgba(212,25,32,0.3);
+  padding: 8px 16px; margin-bottom: 20px;
+}
+.persona-hero__title { font-family: var(--font-display); font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1; color: var(--white); margin-bottom: 20px; }
+.persona-hero__title span { color: var(--red); }
+.persona-hero__subtitle { font-size: 1.05rem; color: var(--gray-light); max-width: 560px; line-height: 1.8; margin-bottom: 36px; }
+.persona-hero__ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+.persona-hero__ctas .btn { text-decoration: none; }
+
+/* Fears */
+.persona-fears { background: var(--black); }
+.persona-fears__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+.persona-fear-card { background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05); padding: 24px; }
+.persona-fear-myth { font-size: 0.85rem; color: var(--gray); margin-bottom: 12px; text-decoration: line-through; }
+.persona-fear-reality { font-size: 0.9rem; color: var(--white); font-weight: 500; line-height: 1.5; }
+
+/* Journey */
+.persona-journey { background: var(--dark); }
+.persona-journey__steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 40px; }
+.persona-step { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.persona-step__num {
+  width: 48px; height: 48px; background: var(--red);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 1.5rem; color: var(--white-pure); flex-shrink: 0;
+}
+.persona-step__title { font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--white); display: block; margin-bottom: 8px; }
+.persona-step__desc { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+/* Learn */
+.persona-learn { background: var(--black); }
+.persona-learn__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+.persona-learn-card { background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05); padding: 28px; }
+.persona-learn-icon { font-size: 2rem; display: block; margin-bottom: 12px; }
+.persona-learn-card h3 { font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--white); margin-bottom: 8px; }
+.persona-learn-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+/* Pricing */
+.persona-pricing { background: var(--dark); }
+.persona-pricing__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+.persona-pricing__card {
+  background: var(--dark-card); border: 1px solid rgba(255,255,255,0.06);
+  padding: 32px 28px; position: relative; transition: transform 0.3s;
+}
+.persona-pricing__card:hover { transform: translateY(-4px); }
+.persona-pricing__card--featured { border-color: var(--red); box-shadow: var(--glow-shadow); }
+.persona-pricing__badge {
+  position: absolute; top: -12px; right: 20px;
+  background: var(--red); color: var(--white-pure);
+  font-family: var(--font-heading); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px;
+}
+.persona-pricing__card h3 { font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 16px; }
+.persona-pricing__price { font-family: var(--font-display); font-size: 2rem; color: var(--white); margin-bottom: 16px; }
+.persona-pricing__price span { font-size: 0.9rem; color: var(--gray); font-family: var(--font-body); }
+.persona-pricing__math { background: rgba(212,25,32,0.05); border-left: 2px solid var(--red); padding: 12px 16px; margin-bottom: 24px; }
+.persona-pricing__math span { font-size: 0.75rem; color: var(--gray); display: block; }
+.persona-pricing__math strong { font-size: 1rem; color: var(--red); display: block; margin: 4px 0; }
+.persona-pricing__math em { font-size: 0.75rem; color: var(--gray-light); font-style: italic; }
+.persona-pricing__card .btn { text-decoration: none; width: 100%; justify-content: center; }
+
+/* CTA */
+.persona-cta { background: linear-gradient(135deg, var(--red-dark), var(--red)); padding: 60px 0; }
+.persona-cta__inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.persona-cta h2 { font-family: var(--font-display); font-size: clamp(1.4rem, 2.5vw, 2rem); color: var(--white-pure); max-width: 500px; }
+.persona-cta p { color: rgba(255,255,255,0.85); font-size: 0.9rem; margin-top: 8px; }
+.persona-cta .btn-primary { background: var(--white-pure); color: var(--red); text-decoration: none; white-space: nowrap; }
+
+/* Internal links */
+.persona-links { background: var(--dark); padding: 50px 0; }
+.persona-links__title { font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+.persona-links__grid { display: flex; gap: 12px; flex-wrap: wrap; }
+.persona-links__card { background: var(--dark-card); border: 1px solid rgba(255,255,255,0.06); padding: 12px 20px; font-size: 0.875rem; color: var(--gray-light); text-decoration: none; transition: all 0.3s; }
+.persona-links__card:hover { border-color: var(--red); color: var(--white); }
+
+@media (max-width: 900px) {
+  .persona-fears__grid, .persona-learn__grid, .persona-pricing__grid { grid-template-columns: 1fr; }
+  .persona-journey__steps { grid-template-columns: 1fr 1fr; }
+  .persona-cta__inner { flex-direction: column; text-align: center; }
+}
+@media (max-width: 600px) {
+  .persona-journey__steps { grid-template-columns: 1fr; }
+}
+</style>

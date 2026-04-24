@@ -1,0 +1,309 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
+const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hola Voltag! 💪 Soy mujer y quiero empezar a entrenar. ¿Me cuentan más?')}`;
+---
+
+<Layout
+  title="Gimnasio para Mujeres en Candelaria | Voltag Gym Manzanares"
+  description="Voltag Gym es el espacio seguro y profesional para mujeres en Manzanares, Candelaria. Entrenamiento femenino, coaches certificadas y ambiente motivador. Planes desde $70.000."
+>
+  <header class="persona-hero">
+    <div class="persona-hero__overlay"></div>
+    <div class="container persona-hero__content">
+      <nav class="loc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Voltag Gym</a>
+        <span>›</span>
+        <span>Para Mujeres</span>
+      </nav>
+      <div class="persona-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
+        Entrenamiento Femenino
+      </div>
+      <h1 class="persona-hero__title">
+        Gimnasio para<br /><span>Mujeres</span> en Candelaria
+      </h1>
+      <p class="persona-hero__subtitle">
+        Un espacio donde entrenar se siente seguro, motivador y real. Voltag Gym en Manzanares 
+        tiene el ambiente y los profesionales que buscas para alcanzar tus metas sin presiones.
+      </p>
+      <div class="persona-hero__ctas">
+        <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="mujer-cta-hero">
+          Empezar mi entrenamiento →
+        </a>
+        <a href="/#planes" class="btn btn-secondary" id="mujer-cta-plans">Ver planes</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Pain points + solution -->
+  <section class="persona-pain">
+    <div class="container persona-pain__grid">
+      <div class="persona-pain__problems">
+        <div class="section-badge">¿Te identificas?</div>
+        <h2 class="section-title">Lo Que Frena a<br /><span>Muchas Mujeres</span></h2>
+        <ul class="persona-pain__list">
+          {[
+            ['😟', '"No sé por dónde empezar"', 'Entrar a un gym sin saber qué hacer intimida. Nuestros coaches te diseñan el plan desde cero.'],
+            ['😰', '"Me da pena ir al gym"', 'Sin juicio. Sin machismo. Voltag es para todos y todas, a cualquier nivel.'],
+            ['🚌', '"Queda muy lejos"', 'Manzanares Sector 17. A minutos de Poblado Campestre, Arboleda y todos los sectores.'],
+            ['💸', '"Está muy caro"', 'Plan mensual desde $70.000. Menos que dos domicilios extras al mes.'],
+          ].map(([emoji, problem, solution]) => (
+            <li class="persona-pain__item">
+              <span class="persona-pain__emoji">{emoji}</span>
+              <div>
+                <strong>{problem}</strong>
+                <p>{solution}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="persona-pain__benefits">
+        <div class="section-badge">En Voltag tendrás</div>
+        <h2 class="section-title">Tu Gym,<br /><span>Tus Reglas</span></h2>
+        <div class="persona-benefits__grid">
+          {[
+            ['🏋️‍♀️', 'Pesas y Máquinas', 'Zona de peso libre y máquinas selectorizadas para todos los grupos musculares'],
+            ['🧘', 'Cardio Completo', 'Trotadoras, elípticas y bicicletas para tus rutinas HIIT o steady state'],
+            ['📋', 'Plan Personalizado', 'Tu coach te diseña una rutina según tus metas: tonificar, bajar de peso, ganar fuerza'],
+            ['🥗', 'Nutrición Guiada', 'Asesoría nutricional para complementar tu entrenamiento y ver resultados reales'],
+            ['💊', 'Suplementos', 'Tienda con proteínas, multivitamínicos y más, recomendados por tu coach'],
+            ['⏰', 'Horarios Amplio', 'Lunes a viernes 5am–10pm. Entrena antes o después del trabajo o estudio'],
+          ].map(([icon, title, desc]) => (
+            <div class="persona-benefit-card">
+              <span class="persona-benefit-icon">{icon}</span>
+              <strong>{title}</strong>
+              <p>{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social proof -->
+  <section class="persona-proof">
+    <div class="container">
+      <div class="section-badge">Lo que dicen ellas</div>
+      <h2 class="section-title">Mujeres Que Ya <span>Transformaron</span> Su Cuerpo</h2>
+      <div class="persona-testimonials">
+        {[
+          ['Carolina M.', 'Manzanares Sector 12', '"Llegué sin saber nada de gym. El profe me hizo un plan y en 3 meses ya noto cambios que nunca esperaba."'],
+          ['Valentina R.', 'Poblado Campestre', '"El ambiente es increíble, nada de machismo. Se siente como entrenar entre amigas y pros."'],
+          ['Daniela S.', 'Arboleda Campestre', '"Dos meses. Bajé 8 kilos. No puedo creer que Voltag esté tan cerca de mi casa."'],
+        ].map(([name, sector, quote]) => (
+          <div class="persona-testimonial">
+            <p class="persona-testimonial__quote">{quote}</p>
+            <div class="persona-testimonial__author">
+              <span class="persona-testimonial__name">{name}</span>
+              <span class="persona-testimonial__loc">📍 {sector}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Plans -->
+  <section class="persona-plans">
+    <div class="container">
+      <div class="section-badge">Precios</div>
+      <h2 class="section-title">Planes <span>Para Ti</span></h2>
+      <div class="persona-plans__grid">
+        {[
+          ['Mensual', '$70.000', '/mes', '= $2.300/día · menos que una gaseosa', false],
+          ['Trimestral', '$180.000', '/3 meses', '= $2.000/día · el plan más inteligente', true],
+          ['Semestral', '$350.000', '/semestre', '= $1.900/día · máximo ahorro', false],
+        ].map(([name, price, period, hint, featured]) => (
+          <div class={`persona-plan ${featured ? 'persona-plan--featured' : ''}`}>
+            {featured && <div class="persona-plan__badge">Más Popular</div>}
+            <h3>{name}</h3>
+            <div class="persona-plan__price">
+              <span class="persona-plan__amount">{price}</span>
+              <span class="persona-plan__period">{period}</span>
+            </div>
+            <p class="persona-plan__hint">{hint}</p>
+            <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class={`btn ${featured ? 'btn-primary' : 'btn-secondary'}`}>
+              Empezar ahora
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA + location -->
+  <section class="persona-cta">
+    <div class="container persona-cta__inner">
+      <div>
+        <h2>¿Lista para empezar?</h2>
+        <p>Un mensaje y te orientamos sin compromiso. Voltag Gym — Manzanares Sector 17, Candelaria.</p>
+      </div>
+      <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="mujer-cta-bottom">
+        Escribir a Voltag Gym
+      </a>
+    </div>
+  </section>
+
+  <!-- Internal links -->
+  <section class="persona-links">
+    <div class="container">
+      <h3 class="persona-links__title">También puede interesarte</h3>
+      <div class="persona-links__grid">
+        <a href="/entrenamiento/principiantes/" class="persona-links__card">🔰 Gym para Principiantes</a>
+        <a href="/entrenamiento/bajar-de-peso/" class="persona-links__card">⚡ Gym para Bajar de Peso</a>
+        <a href="/gimnasio/" class="persona-links__card">📍 Gym por Zona</a>
+        <a href="/#planes" class="persona-links__card">💰 Ver Todos los Planes</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+.persona-hero {
+  position: relative;
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(5,5,5,0.97) 0%, rgba(80,10,30,0.7) 100%),
+    url('/og-image.jpg') center / cover no-repeat;
+  padding-top: calc(var(--nav-height) + 60px);
+  padding-bottom: 80px;
+}
+.persona-hero__overlay { position: absolute; inset: 0; background: #000; opacity: 0.55; }
+.persona-hero__content { position: relative; z-index: 2; }
+.loc-breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.8rem; color: var(--gray); margin-bottom: 20px;
+}
+.loc-breadcrumb a { color: var(--gray-light); }
+.loc-breadcrumb a:hover { color: var(--red); }
+.persona-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--red);
+  background: rgba(212,25,32,0.1); border: 1px solid rgba(212,25,32,0.3);
+  padding: 8px 16px; margin-bottom: 20px;
+}
+.persona-hero__title {
+  font-family: var(--font-display); font-size: clamp(2.8rem, 7vw, 5rem);
+  line-height: 1; color: var(--white); margin-bottom: 20px;
+}
+.persona-hero__title span { color: var(--red); }
+.persona-hero__subtitle {
+  font-size: 1.05rem; color: var(--gray-light); max-width: 560px;
+  line-height: 1.8; margin-bottom: 36px;
+}
+.persona-hero__ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+.persona-hero__ctas .btn { text-decoration: none; }
+
+/* Pain section */
+.persona-pain { background: var(--black); }
+.persona-pain__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.persona-pain__list { display: flex; flex-direction: column; gap: 24px; margin-top: 32px; }
+.persona-pain__item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px; background: var(--dark-card);
+  border-left: 3px solid var(--red);
+}
+.persona-pain__emoji { font-size: 1.8rem; flex-shrink: 0; }
+.persona-pain__item strong {
+  font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px; color: var(--white);
+  display: block; margin-bottom: 4px;
+}
+.persona-pain__item p { font-size: 0.85rem; color: var(--gray); line-height: 1.5; }
+
+.persona-benefits__grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px;
+}
+.persona-benefit-card {
+  background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+  padding: 20px; display: flex; flex-direction: column; gap: 8px;
+}
+.persona-benefit-icon { font-size: 1.5rem; }
+.persona-benefit-card strong {
+  font-family: var(--font-heading); font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; color: var(--white);
+}
+.persona-benefit-card p { font-size: 0.8rem; color: var(--gray); line-height: 1.4; }
+
+/* Testimonials */
+.persona-proof { background: var(--dark); }
+.persona-testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+.persona-testimonial {
+  background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+  border-top: 2px solid var(--red); padding: 28px;
+}
+.persona-testimonial__quote {
+  font-size: 0.9rem; color: var(--gray-light); line-height: 1.7; font-style: italic; margin-bottom: 16px;
+}
+.persona-testimonial__name {
+  font-family: var(--font-heading); font-weight: 700; font-size: 0.85rem;
+  letter-spacing: 1px; color: var(--white); display: block; margin-bottom: 4px;
+}
+.persona-testimonial__loc { font-size: 0.75rem; color: var(--gray); }
+
+/* Plans */
+.persona-plans { background: var(--black); }
+.persona-plans__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+.persona-plan {
+  background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+  padding: 32px 28px; position: relative; transition: transform 0.3s;
+}
+.persona-plan:hover { transform: translateY(-4px); }
+.persona-plan--featured { border-color: var(--red); box-shadow: var(--glow-shadow); }
+.persona-plan__badge {
+  position: absolute; top: -12px; right: 20px;
+  background: var(--red); color: var(--white-pure);
+  font-family: var(--font-heading); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px;
+}
+.persona-plan h3 {
+  font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 16px;
+}
+.persona-plan__price { display: flex; align-items: baseline; gap: 4px; margin-bottom: 8px; }
+.persona-plan__amount {
+  font-family: var(--font-display); font-size: 2.5rem; color: var(--white);
+}
+.persona-plan__period { font-size: 0.85rem; color: var(--gray); }
+.persona-plan__hint {
+  font-size: 0.8rem; color: var(--red); margin-bottom: 24px; font-style: italic;
+}
+.persona-plan .btn { text-decoration: none; width: 100%; justify-content: center; }
+
+/* CTA */
+.persona-cta { background: linear-gradient(135deg, var(--red-dark), var(--red)); padding: 60px 0; }
+.persona-cta__inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.persona-cta h2 { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--white-pure); }
+.persona-cta p { color: rgba(255,255,255,0.85); font-size: 0.9rem; margin-top: 6px; }
+.persona-cta .btn-primary { background: var(--white-pure); color: var(--red); text-decoration: none; }
+
+/* Internal links */
+.persona-links { background: var(--dark); padding: 50px 0; }
+.persona-links__title {
+  font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 20px;
+}
+.persona-links__grid { display: flex; gap: 12px; flex-wrap: wrap; }
+.persona-links__card {
+  background: var(--dark-card); border: 1px solid rgba(255,255,255,0.06);
+  padding: 12px 20px; font-size: 0.875rem; color: var(--gray-light);
+  text-decoration: none; transition: all 0.3s;
+}
+.persona-links__card:hover { border-color: var(--red); color: var(--white); }
+
+@media (max-width: 900px) {
+  .persona-pain__grid { grid-template-columns: 1fr; gap: 40px; }
+  .persona-testimonials { grid-template-columns: 1fr; }
+  .persona-plans__grid { grid-template-columns: 1fr; }
+  .persona-cta__inner { flex-direction: column; text-align: center; }
+}
+@media (max-width: 600px) {
+  .persona-benefits__grid { grid-template-columns: 1fr; }
+}
+</style>

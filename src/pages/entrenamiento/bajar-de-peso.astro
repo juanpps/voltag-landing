@@ -1,0 +1,250 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
+const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hola Voltag! 💪 Quiero bajar de peso y ver resultados reales. ¿Cómo empiezo?')}`;
+---
+
+<Layout
+  title="Gimnasio para Bajar de Peso en Candelaria | Voltag Gym Manzanares"
+  description="¿Buscas bajar de peso y quemar grasa en Candelaria? En Voltag Gym combinamos rutinas de fuerza, cardio y asesoría nutricional para transformar tu cuerpo de verdad. Planes desde $70.000."
+>
+  <header class="persona-hero persona-hero--weightloss">
+    <div class="persona-hero__overlay"></div>
+    <div class="container persona-hero__content">
+      <nav class="loc-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Voltag Gym</a>
+        <span>›</span>
+        <span>Bajar de Peso</span>
+      </nav>
+      <div class="persona-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Quema Grasa y Define
+      </div>
+      <h1 class="persona-hero__title">
+        Gimnasio para<br /><span>Bajar de Peso</span> en Candelaria
+      </h1>
+      <p class="persona-hero__subtitle">
+        Olvídate de matarte de hambre y hacer solo cardio por horas. Te enseñamos el 
+        método real para quemar grasa, ganar tono muscular y mantener los resultados a largo plazo.
+      </p>
+      <div class="persona-hero__ctas">
+        <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="weightloss-cta-hero">
+          Empezar mi transformación →
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Problem/Agitation (The wrong way vs the right way) -->
+  <section class="persona-agitate">
+    <div class="container persona-agitate__inner">
+      <div class="persona-agitate__wrong">
+        <h3>Por qué te has estancado antes ❌</h3>
+        <ul>
+          <li>Hacer horas interminables de trotadora sin resultados visibles.</li>
+          <li>Dietas extremas que te dejan sin energía y con efecto rebote.</li>
+          <li>Ir al gym a "improvisar" sin una estructura de entrenamiento sólida.</li>
+          <li>Falta de masa muscular (el motor que quema calorías incluso en reposo).</li>
+        </ul>
+      </div>
+      <div class="persona-agitate__right">
+        <h3>El Método Voltag 🔥</h3>
+        <ul>
+          <li>Combinación estratégica de fuerza (pesas) y cardio inteligente.</li>
+          <li>Asesoría nutricional para estar en déficit calórico sin aguantar hambre.</li>
+          <li>Plan personalizado con progresión guiada por tu coach.</li>
+          <li>Aceleración de tu metabolismo basal para resultados duraderos.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Value proposition boxes -->
+  <section class="persona-value">
+    <div class="container">
+      <div class="section-badge">Lo necesario</div>
+      <h2 class="section-title">El Ecosistema <span>Quema Grasa</span></h2>
+      <div class="persona-value__grid">
+        <div class="persona-value__card">
+          <div class="persona-value__icon">🏋️‍♂️</div>
+          <h3>Fuerza que Tonifica</h3>
+          <p>
+            Aquí entrenamos fuerza. El músculo es tejido metabólicamente activo. 
+            Mientras más tono muscular ganes, más calorías quemarás las 24 horas del día.
+          </p>
+        </div>
+        <div class="persona-value__card">
+          <div class="persona-value__icon">🏃🏽‍♀️</div>
+          <h3>Cardio Inteligente</h3>
+          <p>
+            Trotadoras, elípticas y área abierta. Te enseñamos cómo integrar el cardio 
+            de forma efectiva después de tu sesión de pesas o en intervalos (HIIT).
+          </p>
+        </div>
+        <div class="persona-value__card">
+          <div class="persona-value__icon">🥗</div>
+          <h3>Nutrición Sostenible</h3>
+          <p>
+            Sin dietas mágicas. Guía nutricional enfocada en crear un déficit 
+            calórico saludable, con suficiente proteína para proteger tu músculo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing with mental accounting + value anchor -->
+  <section class="persona-pricing">
+    <div class="container">
+      <div class="section-badge">Tu inversión</div>
+      <h2 class="section-title">Resultados que <span>Valen la Pena</span></h2>
+      <p class="section-subtitle">¿Cuánto te has gastado en pastillas, batidos milagrosos y dietas de moda?</p>
+      
+      <div class="persona-pricing__grid">
+        <div class="persona-pricing__card">
+          <h3>Plan Mensual</h3>
+          <div class="persona-pricing__price">$70.000 <span>/mes</span></div>
+          <p class="persona-pricing__desc">Todo el equipo y acompañamiento necesario para empezar hoy mismo.</p>
+          <ul class="persona-pricing__list">
+            <li>✓ Rutina diseñada para bajar porcentaje de grasa</li>
+            <li>✓ Acceso a todas las máquinas (Top Quality)</li>
+            <li>✓ Asesoría y seguimiento</li>
+          </ul>
+          <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Comenzar</a>
+        </div>
+        
+        <div class="persona-pricing__card persona-pricing__card--featured">
+          <div class="persona-pricing__badge">🔥 El plan para resultados</div>
+          <h3>Plan 4 Meses</h3>
+          <div class="persona-pricing__price">$250.000 <span>/4 meses</span></div>
+          <div class="persona-pricing__math">
+            <span>Ahorras $30.000</span>
+            <strong>= $62.500 al mes</strong>
+            <em>El compromiso de 4 meses asegura la constancia necesaria para transformar tu físico de verdad.</em>
+          </div>
+          <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">Comprometerme 4 meses</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="persona-cta">
+    <div class="container persona-cta__inner">
+      <div>
+        <h2>Deja de posponer tu salud. Empieza tu cambio hoy.</h2>
+        <p>Estamos en Manzanares Sector 17, recibiendo toda Candelaria.</p>
+      </div>
+      <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="weightloss-cta-bottom">
+        Pautar mi primer día
+      </a>
+    </div>
+  </section>
+
+  <!-- Internal links -->
+  <section class="persona-links">
+    <div class="container">
+      <h3 class="persona-links__title">Sigue Explorando</h3>
+      <div class="persona-links__grid">
+        <a href="/entrenamiento/principiantes/" class="persona-links__card">🔰 Gym para Principiantes</a>
+        <a href="/entrenamiento/mujeres/" class="persona-links__card">👩 Gym para Mujeres</a>
+        <a href="/gimnasio/" class="persona-links__card">📍 Gym Cerca de Casa</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+.persona-hero {
+  position: relative; min-height: 65vh; display: flex; align-items: center;
+  background: linear-gradient(135deg, rgba(5,5,5,0.98) 0%, rgba(200,40,40,0.4) 100%),
+    url('/og-image.jpg') center / cover no-repeat;
+  padding-top: calc(var(--nav-height) + 60px); padding-bottom: 80px;
+}
+.persona-hero__overlay { position: absolute; inset: 0; background: #000; opacity: 0.65; }
+.persona-hero__content { position: relative; z-index: 2; }
+.loc-breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--gray); margin-bottom: 20px; }
+.loc-breadcrumb a { color: var(--gray-light); }
+.loc-breadcrumb a:hover { color: var(--red); }
+.persona-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--red);
+  background: rgba(212,25,32,0.1); border: 1px solid rgba(212,25,32,0.3);
+  padding: 8px 16px; margin-bottom: 20px;
+}
+.persona-hero__title { font-family: var(--font-display); font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1; color: var(--white); margin-bottom: 20px; }
+.persona-hero__title span { color: var(--red); }
+.persona-hero__subtitle { font-size: 1.05rem; color: var(--gray-light); max-width: 580px; line-height: 1.8; margin-bottom: 36px; }
+.persona-hero__ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+.persona-hero__ctas .btn { text-decoration: none; }
+
+/* Agitate (Wrong way vs Right way) */
+.persona-agitate { background: var(--black); padding: 80px 0; }
+.persona-agitate__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.persona-agitate__wrong, .persona-agitate__right {
+  padding: 40px; border-radius: 4px;
+}
+.persona-agitate__wrong { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); }
+.persona-agitate__right { background: rgba(212,25,32,0.05); border: 1px solid rgba(212,25,32,0.3); }
+.persona-agitate h3 { font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 24px; color: var(--white); }
+.persona-agitate__wrong h3 { color: #ff6b6b; }
+.persona-agitate__right h3 { color: var(--red); }
+.persona-agitate ul { display: flex; flex-direction: column; gap: 16px; }
+.persona-agitate li { font-size: 0.95rem; color: var(--gray-light); line-height: 1.5; padding-left: 20px; position: relative; }
+.persona-agitate__wrong li::before { content: '×'; position: absolute; left: 0; color: #ff6b6b; font-weight: bold; }
+.persona-agitate__right li::before { content: '✓'; position: absolute; left: 0; color: var(--red); font-weight: bold; }
+
+/* Value */
+.persona-value { background: var(--dark); padding-bottom: 80px; }
+.persona-value__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+.persona-value__card { background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05); padding: 32px 24px; border-top: 3px solid var(--red); }
+.persona-value__icon { font-size: 2.5rem; margin-bottom: 20px; }
+.persona-value__card h3 { font-family: var(--font-heading); font-size: 1rem; color: var(--white); margin-bottom: 12px; }
+.persona-value__card p { font-size: 0.9rem; color: var(--gray); line-height: 1.6; }
+
+/* Pricing */
+.persona-pricing { background: var(--black); padding-bottom: 80px; }
+.persona-pricing__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px; max-width: 900px; margin-inline: auto; }
+.persona-pricing__card { background: var(--dark-card); border: 1px solid rgba(255,255,255,0.06); padding: 40px; position: relative; transition: transform 0.3s; }
+.persona-pricing__card:hover { transform: translateY(-4px); }
+.persona-pricing__card--featured { border-color: var(--red); box-shadow: var(--glow-shadow); }
+.persona-pricing__badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--red); color: var(--white-pure);
+  font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; white-space: nowrap;
+}
+.persona-pricing__card h3 { font-family: var(--font-heading); font-size: 1.2rem; color: var(--white); margin-bottom: 8px; text-align: center; }
+.persona-pricing__price { font-family: var(--font-display); font-size: 3rem; color: var(--white); text-align: center; margin-bottom: 8px; }
+.persona-pricing__price span { font-size: 1rem; color: var(--gray); font-family: var(--font-body); }
+.persona-pricing__desc { text-align: center; color: var(--gray-light); font-size: 0.9rem; margin-bottom: 24px; }
+.persona-pricing__list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+.persona-pricing__list li { color: var(--gray-light); font-size: 0.9rem; }
+.persona-pricing__math { background: rgba(212,25,32,0.05); border-left: 3px solid var(--red); padding: 16px; margin-bottom: 30px; }
+.persona-pricing__math span { font-size: 0.8rem; color: #ff6b6b; display: block; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+.persona-pricing__math strong { font-size: 1.4rem; color: var(--white); display: block; margin: 4px 0; }
+.persona-pricing__math em { font-size: 0.85rem; color: var(--gray); font-style: italic; line-height: 1.4; display: block; margin-top: 8px; }
+.persona-pricing__card .btn { text-decoration: none; width: 100%; justify-content: center; padding: 16px; }
+
+/* CTA */
+.persona-cta { background: linear-gradient(135deg, var(--red-dark), var(--red)); padding: 60px 0; }
+.persona-cta__inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.persona-cta h2 { font-family: var(--font-display); font-size: clamp(1.4rem, 2.5vw, 2rem); color: var(--white-pure); max-width: 500px; }
+.persona-cta p { color: rgba(255,255,255,0.85); font-size: 0.9rem; margin-top: 8px; }
+.persona-cta .btn-primary { background: var(--white-pure); color: var(--red); text-decoration: none; white-space: nowrap; }
+
+/* Internal links */
+.persona-links { background: var(--dark); padding: 50px 0; }
+.persona-links__title { font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 20px; }
+.persona-links__grid { display: flex; gap: 12px; flex-wrap: wrap; }
+.persona-links__card { background: var(--dark-card); border: 1px solid rgba(255,255,255,0.06); padding: 12px 20px; font-size: 0.875rem; color: var(--gray-light); text-decoration: none; transition: all 0.3s; }
+.persona-links__card:hover { border-color: var(--red); color: var(--white); }
+
+@media (max-width: 900px) {
+  .persona-agitate__inner, .persona-pricing__grid { grid-template-columns: 1fr; gap: 24px; }
+  .persona-value__grid { grid-template-columns: 1fr; }
+  .persona-cta__inner { flex-direction: column; text-align: center; }
+}
+</style>
