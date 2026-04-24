@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../utils/firebase.client';
 
 export default function PromoTopBanner() {
@@ -7,20 +7,22 @@ export default function PromoTopBanner() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPromo = async () => {
-      try {
-        const docRef = doc(db, 'configuracion', 'promociones');
-        const snap = await getDoc(docRef);
-        if (snap.exists() && snap.data().bannerActive) {
-          setPromo(snap.data());
-        }
-      } catch (e) {
-        console.error("Error fetching promo:", e);
-      } finally {
-        setLoading(false);
+    // 1. SILENCE IN ADMIN
+    if (window.location.pathname.startsWith('/admin')) {
+      setLoading(false);
+      return;
+    }
+
+    const unsub = onSnapshot(doc(db, 'configuracion', 'promociones'), (doc) => {
+      if (doc.exists() && doc.data().bannerActive) {
+        setPromo(doc.data());
+      } else {
+        setPromo(null);
       }
-    };
-    fetchPromo();
+      setLoading(false);
+    });
+
+    return () => unsub();
   }, []);
 
   if (loading || !promo) return null;
