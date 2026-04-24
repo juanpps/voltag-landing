@@ -59,35 +59,32 @@ const navLinks = [
       <span></span>
     </button>
   </div>
-
-  <!-- Mobile Menu -->
-  <div class="nav__mobile" id="nav-mobile">
-    <ul class="nav__mobile-links">
-      {navLinks.map(link => (
-        <li><a href={link.href} class="nav__mobile-link">{link.label}</a></li>
-      ))}
-    </ul>
-    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary nav__mobile-cta">
-      Únete ahora
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-  </div>
 </nav>
+
+<!-- Mobile Menu (Outside Nav to break stacking context) -->
+<div class="nav-mobile-overlay" id="nav-mobile">
+  <ul class="nav-mobile-links">
+    {navLinks.map(link => (
+      <li><a href={link.href} class="nav-mobile-link">{link.label}</a></li>
+    ))}
+  </ul>
+  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary nav-mobile-cta">
+    Únete ahora
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const nav = document.getElementById('main-nav');
     const hamburger = document.getElementById('nav-hamburger');
     const mobileMenu = document.getElementById('nav-mobile');
-    const mobileLinks = document.querySelectorAll('.nav__mobile-link');
+    const mobileLinks = document.querySelectorAll('.nav-mobile-link');
 
     let lastScroll = 0;
     window.addEventListener('scroll', () => {
       const currentScroll = window.scrollY;
-      
-      // Don't hide nav if mobile menu is open
-      const isMenuOpen = mobileMenu?.classList.contains('nav__mobile--open');
-      
+      const isMenuOpen = mobileMenu?.classList.contains('nav-mobile-overlay--open');
       if (nav && !isMenuOpen) {
         nav.classList.toggle('nav--scrolled', currentScroll > 60);
         nav.classList.toggle('nav--hidden', currentScroll > lastScroll && currentScroll > 300);
@@ -96,11 +93,12 @@ const navLinks = [
     });
 
     hamburger?.addEventListener('click', () => {
-      const isOpen = mobileMenu?.classList.toggle('nav__mobile--open');
+      const isOpening = !mobileMenu?.classList.contains('nav-mobile-overlay--open');
+      mobileMenu?.classList.toggle('nav-mobile-overlay--open');
       hamburger.classList.toggle('nav__hamburger--active');
-      hamburger.setAttribute('aria-expanded', String(isOpen));
+      hamburger.setAttribute('aria-expanded', String(isOpening));
       
-      if (isOpen) {
+      if (isOpening) {
         document.body.classList.add('no-scroll');
         nav?.classList.remove('nav--hidden');
         nav?.classList.add('nav--scrolled');
@@ -111,7 +109,7 @@ const navLinks = [
 
     mobileLinks.forEach(link => {
       link.addEventListener('click', () => {
-        mobileMenu?.classList.remove('nav__mobile--open');
+        mobileMenu?.classList.remove('nav-mobile-overlay--open');
         hamburger?.classList.remove('nav__hamburger--active');
         document.body.classList.remove('no-scroll');
       });
@@ -264,50 +262,50 @@ const navLinks = [
     transform: rotate(-45deg) translate(5px, -5px);
   }
 
-  .nav__mobile {
+  .nav-mobile-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: #050505 !important; /* Force solid black */
-    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: #050505 !important;
+    display: none; /* Default hidden */
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 40px;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.4s ease;
     z-index: 2000;
   }
 
-  .nav__mobile--open {
-    opacity: 1;
-    pointer-events: all;
+  .nav-mobile-overlay--open {
+    display: flex !important;
   }
 
-  .nav__mobile-links {
+  .nav-mobile-links {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 28px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
-  .nav__mobile-link {
+  .nav-mobile-link {
     font-family: var(--font-display);
-    font-size: 2rem;
+    font-size: 2.2rem;
     color: var(--white);
     text-decoration: none;
     letter-spacing: 3px;
+    text-transform: uppercase;
     transition: color 0.3s;
   }
 
-  .nav__mobile-link:hover {
+  .nav-mobile-link:hover {
     color: var(--red);
   }
 
-  .nav__mobile-cta {
+  .nav-mobile-cta {
     text-decoration: none;
     font-size: 0.85rem;
     padding: 14px 36px;
