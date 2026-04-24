@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
 
-Sitemap: https://voltag-gym.com/sitemap.xml
+Sitemap: https://voltag-gym.com/sitemap-index.xml

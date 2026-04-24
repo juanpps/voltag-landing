@@ -117,6 +117,19 @@ const socialLinks = [
         </li>
       </ul>
     </div>
+
+    <div class="footer__zones">
+      <h4 class="footer__heading">Zonas que Cubrimos</h4>
+      <ul class="footer__links">
+        <li><a href="/gimnasio/manzanares-sector-17/" class="footer__link">Manzanares Sector 17</a></li>
+        <li><a href="/gimnasio/poblado-campestre/" class="footer__link">Poblado Campestre</a></li>
+        <li><a href="/gimnasio/arboleda-campestre/" class="footer__link">Arboleda Campestre</a></li>
+        <li><a href="/gimnasio/ciudad-del-valle/" class="footer__link">Ciudad del Valle</a></li>
+        <li><a href="/gimnasio/candelaria/" class="footer__link">Candelaria</a></li>
+        <li><a href="/gimnasio/sur-de-cali/" class="footer__link">Sur de Cali</a></li>
+        <li><a href="/gimnasio/" class="footer__link footer__link--all">→ Ver todas las zonas</a></li>
+      </ul>
+    </div>
   </div>
 
   <div class="footer__bottom">
@@ -134,6 +147,7 @@ const socialLinks = [
   </div>
 </footer>
 
+
 <style>
   .footer {
     background: var(--dark);
@@ -143,8 +157,8 @@ const socialLinks = [
 
   .footer__grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 48px;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
     padding-bottom: 60px;
   }
 
@@ -299,9 +313,17 @@ const socialLinks = [
     font-weight: 800;
   }
 
+  .footer__link--all {
+    color: var(--red) !important;
+    font-weight: 600;
+    margin-top: 4px;
+    display: inline-block;
+  }
+  .footer__link--all:hover { opacity: 0.8; }
+
   @media (max-width: 900px) {
     .footer__grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 36px;
     }
 

@@ -1,0 +1,262 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { locations } from '../../data/locations';
+
+const sectorLocations = locations.filter(l => l.sector);
+const namedLocations = locations.filter(l => !l.sector);
+const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
+const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hola Voltag! 💪 Quisiera saber más sobre el gym.')}`;
+---
+
+<Layout
+  title="Gimnasio cerca de mí en Candelaria | Voltag Gym — Manzanares, Poblado, Ciudad del Valle"
+  description="¿Buscas un gimnasio cerca? Voltag Gym cubre toda la zona: Manzanares sectores 1–35, Poblado Campestre, Arboleda Campestre, Ciudad del Valle. Planes desde $70.000."
+>
+  <!-- ── HERO ───────────────────────────────────── -->
+  <header class="hub-hero">
+    <div class="hub-hero__overlay"></div>
+    <div class="container hub-hero__content">
+      <nav class="hub-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Voltag Gym</a>
+        <span>›</span>
+        <span>Gimnasio Cerca</span>
+      </nav>
+      <div class="hub-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Cubrimos toda la zona
+      </div>
+      <h1 class="hub-hero__title">
+        Gimnasio Cerca de<br /><span>Manzanares y Candelaria</span>
+      </h1>
+      <p class="hub-hero__subtitle">
+        Voltag Gym está en Manzanares Sector 17. Cubrimos todos los sectores de Manzanares 
+        (1 al 35), Poblado Campestre, Arboleda Campestre, Ciudad del Valle y el sur de Cali.
+        Encuentra tu sector y empieza hoy.
+      </p>
+      <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="hub-hero-cta">
+        Contactar Voltag Gym →
+      </a>
+    </div>
+  </header>
+
+  <!-- ── SECTORS GRID ─────────────────────────────── -->
+  <section class="hub-sectors">
+    <div class="container">
+      <div class="section-badge">Manzanares Sector 1 al 35</div>
+      <h2 class="section-title">Manzanares: <span>Elige tu Sector</span></h2>
+      <p class="section-subtitle">Encuentra el tiempo exacto que tardas en llegar desde tu sector.</p>
+
+      <div class="hub-grid">
+        {sectorLocations.sort((a, b) => parseInt(a.sector!) - parseInt(b.sector!)).map(loc => (
+          <a href={`/gimnasio/${loc.slug}/`} class="hub-card">
+            <div class="hub-card__sector">Sector {loc.sector}</div>
+            <div class="hub-card__name">{loc.shortName}</div>
+            <div class="hub-card__dist">{loc.distanceText}</div>
+            <div class="hub-card__arrow">→</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NAMED LOCATIONS ─────────────────────────── -->
+  <section class="hub-zones">
+    <div class="container">
+      <div class="section-badge">Urbanizaciones y Zonas</div>
+      <h2 class="section-title">También Cubrimos <span>Tu Zona</span></h2>
+
+      <div class="hub-zones__grid">
+        {namedLocations.map(loc => (
+          <a href={`/gimnasio/${loc.slug}/`} class="hub-zones__card">
+            <div class="hub-zones__card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="hub-zones__card-name">{loc.name}</div>
+              <div class="hub-zones__card-dist">{loc.distanceText}</div>
+              <div class="hub-zones__card-hook">{loc.hook}</div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHY VOLTAG ───────────────────────────────── -->
+  <section class="hub-why">
+    <div class="container">
+      <div class="section-badge">¿Por qué elegirnos?</div>
+      <h2 class="section-title">El Gym Que Toda <span>La Zona Necesitaba</span></h2>
+      <div class="hub-why__grid">
+        {[
+          ['🏋️', 'Equipos Profesionales', 'Grado comercial, igual que los gyms del norte de Cali'],
+          ['👨‍🏫', 'Entrenadores Certificados', 'Coaches con formación real para tu progreso'],
+          ['💰', 'Precios Justos', 'Desde $70.000/mes. Sin contratos ni letras pequeñas'],
+          ['⏰', 'Horarios Amplios', 'Abre 5am para que no tengas excusas'],
+          ['🧴', 'Suplementos en Gym', 'Proteínas, creatina y más directamente importados'],
+          ['🔥', 'Comunidad Fitness', 'El ambiente que te empuja a dar más cada día'],
+        ].map(([emoji, title, desc]) => (
+          <div class="hub-why__card">
+            <div class="hub-why__emoji">{emoji}</div>
+            <h3>{title}</h3>
+            <p>{desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ─────────────────────────────────────── -->
+  <section class="hub-cta">
+    <div class="container hub-cta__inner">
+      <h2>¿Dónde vives? Escríbenos y te decimos cómo llegar.</h2>
+      <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="hub-final-cta">
+        WhatsApp Voltag Gym
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+/* ── Hero ─────────────────────────────────── */
+.hub-hero {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  background: 
+    linear-gradient(135deg, rgba(5,5,5,0.98) 0%, rgba(5,5,5,0.85) 70%, rgba(212,25,32,0.12) 100%),
+    url('/og-image.jpg') center / cover no-repeat;
+  padding-top: calc(var(--nav-height) + 60px);
+  padding-bottom: 80px;
+}
+.hub-hero__overlay { position: absolute; inset: 0; background: #000; opacity: 0.6; }
+.hub-hero__content { position: relative; z-index: 2; }
+.hub-breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.8rem; color: var(--gray); margin-bottom: 24px;
+}
+.hub-breadcrumb a { color: var(--gray-light); }
+.hub-breadcrumb a:hover { color: var(--red); }
+.hub-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--red);
+  background: rgba(212,25,32,0.1); border: 1px solid rgba(212,25,32,0.3);
+  padding: 8px 16px; margin-bottom: 20px;
+}
+.hub-hero__title {
+  font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.05; color: var(--white); margin-bottom: 20px;
+}
+.hub-hero__title span { color: var(--red); }
+.hub-hero__subtitle {
+  font-size: 1rem; color: var(--gray-light); max-width: 640px;
+  line-height: 1.8; margin-bottom: 36px;
+}
+.hub-hero .btn { text-decoration: none; }
+
+/* ── Sectors grid ─────────────────────────── */
+.hub-sectors { background: var(--black); }
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 48px;
+}
+.hub-card {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 20px 16px; background: var(--dark-card);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-top: 2px solid transparent;
+  transition: all 0.3s var(--transition); text-decoration: none;
+  position: relative;
+}
+.hub-card:hover {
+  border-top-color: var(--red);
+  background: var(--dark-card-hover);
+  transform: translateY(-3px);
+}
+.hub-card__sector {
+  font-family: var(--font-heading); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--red);
+}
+.hub-card__name { font-family: var(--font-heading); font-size: 1rem; font-weight: 700; color: var(--white); }
+.hub-card__dist { font-size: 0.8rem; color: var(--gray); }
+.hub-card__arrow {
+  position: absolute; bottom: 16px; right: 16px;
+  color: var(--red); font-size: 1rem; opacity: 0;
+  transition: opacity 0.2s;
+}
+.hub-card:hover .hub-card__arrow { opacity: 1; }
+
+/* ── Named zones ──────────────────────────── */
+.hub-zones { background: var(--dark); }
+.hub-zones__grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 48px;
+}
+.hub-zones__card {
+  display: flex; align-items: flex-start; gap: 20px;
+  padding: 28px; background: var(--dark-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-left: 3px solid var(--red);
+  transition: all 0.3s var(--transition); text-decoration: none;
+}
+.hub-zones__card:hover { background: var(--dark-card-hover); transform: translateX(4px); }
+.hub-zones__card-name {
+  font-family: var(--font-heading); font-size: 1rem; font-weight: 700;
+  color: var(--white); letter-spacing: 1px; margin-bottom: 4px;
+}
+.hub-zones__card-dist { font-size: 0.8rem; color: var(--red); margin-bottom: 8px; }
+.hub-zones__card-hook { font-size: 0.875rem; color: var(--gray); line-height: 1.5; }
+
+/* ── Why ──────────────────────────────────── */
+.hub-why { background: var(--black); }
+.hub-why__grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px;
+}
+.hub-why__card {
+  background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05);
+  padding: 32px 28px; transition: transform 0.3s var(--transition);
+}
+.hub-why__card:hover { transform: translateY(-4px); }
+.hub-why__emoji { font-size: 2rem; margin-bottom: 16px; }
+.hub-why__card h3 {
+  font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 8px;
+}
+.hub-why__card p { font-size: 0.875rem; color: var(--gray); line-height: 1.6; }
+
+/* ── CTA ─────────────────────────────────── */
+.hub-cta {
+  background: linear-gradient(135deg, var(--red-dark), var(--red));
+  padding: 70px 0;
+}
+.hub-cta__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 40px; flex-wrap: wrap;
+}
+.hub-cta h2 {
+  font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: var(--white-pure); max-width: 600px;
+}
+.hub-cta .btn-primary {
+  background: var(--white-pure); color: var(--red); white-space: nowrap; text-decoration: none;
+}
+.hub-cta .btn-primary:hover { background: var(--black-pure); color: var(--white-pure); }
+
+/* ── Responsive ─────────────────────────── */
+@media (max-width: 1000px) {
+  .hub-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .hub-grid { grid-template-columns: repeat(2, 1fr); }
+  .hub-why__grid { grid-template-columns: 1fr 1fr; }
+  .hub-zones__grid { grid-template-columns: 1fr; }
+  .hub-cta__inner { flex-direction: column; text-align: center; }
+}
+@media (max-width: 600px) {
+  .hub-grid { grid-template-columns: 1fr 1fr; }
+  .hub-why__grid { grid-template-columns: 1fr; }
+}
+</style>
