@@ -1,5 +1,5 @@
 ---
-import PromoTopBanner from './PromoTopBanner.astro';
+import PromoTopBanner from './PromoTopBanner.jsx';
 import { Image } from 'astro:assets';
 import heroImg from '../assets/images/hero/hero-gym.jpg';
 
@@ -24,7 +24,7 @@ const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hol
   <div class="hero__overlay"></div>
 
   <div class="hero__content container">
-    <PromoTopBanner />
+    <PromoTopBanner client:load />
     <div class="hero__badge">
       <svg class="hero__badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       Since 2024 — Voltag Gym

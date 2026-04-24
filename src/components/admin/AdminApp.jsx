@@ -15,15 +15,24 @@ export default function AdminApp({ basename = "/admin" }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      // Validate against environment email list
+      console.log("Auth state change detected. User:", currentUser?.email);
+      
       const adminEmailsString = import.meta.env.PUBLIC_ADMIN_EMAIL || '';
       const authorizedEmails = adminEmailsString.split(',').map(e => e.trim().toLowerCase());
       
-      if (currentUser && currentUser.email && authorizedEmails.includes(currentUser.email.toLowerCase())) {
-        setUser(currentUser);
+      if (currentUser && currentUser.email) {
+        const isAuthorized = authorizedEmails.includes(currentUser.email.toLowerCase());
+        console.log("Checking authorization for:", currentUser.email, "Result:", isAuthorized);
+        
+        if (isAuthorized) {
+          setUser(currentUser);
+        } else {
+          console.error("Unauthorized access attempt by:", currentUser.email);
+          setUser(null);
+          // Optional: clear the session so they can try a different account
+          auth.signOut();
+        }
       } else {
-        // If logged in with wrong email, we could log them out automatically
-        // but for now we just don't grant them access in the UI layer.
         setUser(null);
       }
       setLoading(false);
