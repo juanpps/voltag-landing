@@ -7,14 +7,17 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const handleGoogleLogin = async () => {
+    // FIX: Must invoke the popup synchronously within the generic JS event loop 
+    // BEFORE React async batching destroys the "trusted user gesture" context.
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    const loginPromise = signInWithPopup(auth, provider);
+
     setError('');
     setLoading(true);
 
     try {
-      const provider = new GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: 'select_account' });
-      
-      const result = await signInWithPopup(auth, provider);
+      const result = await loginPromise;
       const user = result.user;
       
       const adminEmailsString = import.meta.env.PUBLIC_ADMIN_EMAIL || '';
