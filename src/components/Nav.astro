@@ -84,7 +84,11 @@ const navLinks = [
     let lastScroll = 0;
     window.addEventListener('scroll', () => {
       const currentScroll = window.scrollY;
-      if (nav) {
+      
+      // Don't hide nav if mobile menu is open
+      const isMenuOpen = mobileMenu?.classList.contains('nav__mobile--open');
+      
+      if (nav && !isMenuOpen) {
         nav.classList.toggle('nav--scrolled', currentScroll > 60);
         nav.classList.toggle('nav--hidden', currentScroll > lastScroll && currentScroll > 300);
       }
@@ -96,6 +100,12 @@ const navLinks = [
       hamburger.classList.toggle('nav__hamburger--active');
       hamburger.setAttribute('aria-expanded', String(isOpen));
       document.body.style.overflow = isOpen ? 'hidden' : '';
+      
+      // Ensure nav is visible when menu is opened
+      if (isOpen) {
+        nav?.classList.remove('nav--hidden');
+        nav?.classList.add('nav--scrolled');
+      }
     });
 
     mobileLinks.forEach(link => {
@@ -247,8 +257,7 @@ const navLinks = [
   .nav__mobile {
     position: fixed;
     inset: 0;
-    background: rgba(10, 10, 10, 0.97);
-    backdrop-filter: blur(20px);
+    background: #050505; /* Black solid background */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -256,8 +265,8 @@ const navLinks = [
     gap: 40px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.4s;
-    z-index: 5;
+    transition: all 0.4s ease;
+    z-index: 2000; /* Much higher than nav */
   }
 
   .nav__mobile--open {
