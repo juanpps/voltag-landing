@@ -34,7 +34,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Conjunto Pórtico', 'Parque Manzanares', 'Supermercado sector 17'],
     keywords: ['gimnasio manzanares sector 17', 'gym sector 17 candelaria', 'voltag gym manzanares'],
     metaTitle: 'Gimnasio en Manzanares Sector 17 | Voltag Gym — tu gym del barrio',
-    metaDescription: 'Voltag Gym está en Manzanares Sector 17, Candelaria. Equipos profesionales, entrenadores certificados y planes desde $70.000. ¡El gym de tu barrio!',
+    metaDescription: 'Voltag Gym está en Manzanares Sector 17, Candelaria. Equipos profesionales, entrenadores certificados y planes desde $69.000. ¡El gym de tu barrio!',
   },
   // ── Manzanares Sector 1 ───────────────────────────────────────────────────
   {
@@ -49,7 +49,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Entrada Manzanares', 'Colegio sector 1', 'Vía Candelaria-Palmira'],
     keywords: ['gimnasio manzanares sector 1', 'gym cerca de manzanares 1', 'gimnasio candelaria sector 1'],
     metaTitle: 'Gimnasio cerca de Manzanares Sector 1 | Voltag Gym Candelaria',
-    metaDescription: 'Desde Manzanares Sector 1 llegas a Voltag Gym en 7 minutos. Equipos profesionales, entrenadores certificados y planes desde $70.000 COP.',
+    metaDescription: 'Desde Manzanares Sector 1 llegas a Voltag Gym en 7 minutos. Equipos profesionales, entrenadores certificados y planes desde $69.000 COP.',
   },
   // ── Manzanares Sector 2 ───────────────────────────────────────────────────
   {
@@ -64,7 +64,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Parque sector 2', 'Tienda de barrio Manzanares', 'Vía interna Manzanares'],
     keywords: ['gimnasio manzanares sector 2', 'gym manzanares 2', 'gym cerca candelaria'],
     metaTitle: 'Gimnasio Manzanares Sector 2 | Voltag Gym — entrena cerca',
-    metaDescription: 'Voltag Gym, el mejor gimnasio desde Manzanares Sector 2. A 6 minutos de tu casa, con equipos profesionales y planes desde $70.000.',
+    metaDescription: 'Voltag Gym, el mejor gimnasio desde Manzanares Sector 2. A 6 minutos de tu casa, con equipos profesionales y planes desde $69.000.',
   },
   // ── Manzanares Sector 3 ───────────────────────────────────────────────────
   {
@@ -79,7 +79,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Acceso sur Manzanares', 'Via Ciudad del Valle'],
     keywords: ['gimnasio manzanares sector 3', 'gym candelaria sector 3'],
     metaTitle: 'Gimnasio Manzanares Sector 3 | Voltag Gym Candelaria',
-    metaDescription: 'Desde Manzanares Sector 3 hasta Voltag Gym son 6 minutos. Planes desde $70.000, equipos pro y entrenadores certificados.',
+    metaDescription: 'Desde Manzanares Sector 3 hasta Voltag Gym son 6 minutos. Planes desde $69.000, equipos pro y entrenadores certificados.',
   },
   // ── Manzanares Sector 4 ───────────────────────────────────────────────────
   {
@@ -90,11 +90,11 @@ export const locations: GymLocation[] = [
     distanceText: 'a 5 minutos',
     distanceMinutes: 5,
     hook: 'Manzanares Sector 4 — 5 minutos te separan del gym que mereces.',
-    description: 'El Sector 4 de Manzanares está a 5 minutos de Voltag Gym, la opción de entrenamiento más completa de Candelaria. Peso libre, máquinas selectorizadas, cardio, asesoría personalizada y suplementos deportivos en un solo lugar. Planes accesibles desde $70.000 al mes para que no tengas que elegir entre entrenar y tu bolsillo.',
+    description: 'El Sector 4 de Manzanares está a 5 minutos de Voltag Gym, la opción de entrenamiento más completa de Candelaria. Peso libre, máquinas selectorizadas, cardio, asesoría personalizada y suplementos deportivos en un solo lugar. Planes accesibles desde $69.000 al mes para que no tengas que elegir entre entrenar y tu bolsillo.',
     nearbyLandmarks: ['Zona residencial sector 4', 'Via Candelaria principal'],
     keywords: ['gimnasio manzanares sector 4', 'gym sector 4 candelaria'],
     metaTitle: 'Gimnasio Manzanares Sector 4 | Voltag Gym — 5 min de tu casa',
-    metaDescription: 'El mejor gimnasio para Manzanares Sector 4. Voltag Gym a 5 minutos, con equipos profesionales y planes desde $70.000 COP.',
+    metaDescription: 'El mejor gimnasio para Manzanares Sector 4. Voltag Gym a 5 minutos, con equipos profesionales y planes desde $69.000 COP.',
   },
   // ── Manzanares Sector 5 ───────────────────────────────────────────────────
   {
@@ -109,7 +109,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Residencias sector 5', 'Manzanares norte'],
     keywords: ['gimnasio manzanares 5', 'gym cerca de sector 5 candelaria'],
     metaTitle: 'Gimnasio Manzanares Sector 5 | Voltag Gym Candelaria Valle',
-    metaDescription: 'Desde Manzanares Sector 5 a Voltag Gym son 5 minutos. Horarios amplios, planes desde $70.000 y entrenadores certificados.',
+    metaDescription: 'Desde Manzanares Sector 5 a Voltag Gym son 5 minutos. Horarios amplios, planes desde $69.000 y entrenadores certificados.',
   },
   // ── Manzanares Sector 7 ───────────────────────────────────────────────────
   {
@@ -124,7 +124,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Conjunto residencial sector 7', 'Parroquia Manzanares'],
     keywords: ['gimnasio manzanares sector 7', 'gym manzanares 7'],
     metaTitle: 'Gimnasio Manzanares Sector 7 | Voltag Gym — el gym de Candelaria',
-    metaDescription: 'Desde Sector 7 de Manzanares llegas a Voltag Gym en 8 minutos. El mejor gym de Candelaria, con precios desde $70.000/mes.',
+    metaDescription: 'Desde Sector 7 de Manzanares llegas a Voltag Gym en 8 minutos. El mejor gym de Candelaria, con precios desde $69.000/mes.',
   },
   // ── Manzanares Sector 10 ──────────────────────────────────────────────────
   {
@@ -135,11 +135,11 @@ export const locations: GymLocation[] = [
     distanceText: 'a 8 minutos',
     distanceMinutes: 8,
     hook: 'Sector 10, Manzanares — tu gym lo esperas a 8 minutos.',
-    description: 'Desde el Sector 10 de Manzanares hasta Voltag Gym son 8 minutos de camino. Nada comparado con el resultado de entrenar con equipos profesionales y el respaldo de entrenadores certificados. Planes desde $70.000 al mes. Sin contratos trampa. Sin mensualidades que te roben. Solo hierro, dedicación y resultados.',
+    description: 'Desde el Sector 10 de Manzanares hasta Voltag Gym son 8 minutos de camino. Nada comparado con el resultado de entrenar con equipos profesionales y el respaldo de entrenadores certificados. Planes desde $69.000 al mes. Sin contratos trampa. Sin mensualidades que te roben. Solo hierro, dedicación y resultados.',
     nearbyLandmarks: ['Zona comercial Manzanares', 'Escuela Manzanares'],
     keywords: ['gimnasio manzanares sector 10', 'gym cerca candelaria sector 10'],
     metaTitle: 'Gimnasio Manzanares Sector 10 | Voltag Gym Candelaria',
-    metaDescription: 'Entrena desde Manzanares Sector 10 en Voltag Gym, a solo 8 minutos. Planes desde $70.000, equipos pro, abierto desde las 5am.',
+    metaDescription: 'Entrena desde Manzanares Sector 10 en Voltag Gym, a solo 8 minutos. Planes desde $69.000, equipos pro, abierto desde las 5am.',
   },
   // ── Manzanares Sector 12 ──────────────────────────────────────────────────
   {
@@ -154,7 +154,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Via interna sector 12', 'Conjunto Manzanares norte'],
     keywords: ['gimnasio manzanares 12', 'gym sector 12 candelaria'],
     metaTitle: 'Gimnasio Manzanares Sector 12 | Voltag Gym — calidad real',
-    metaDescription: 'El gym del Sector 12, Manzanares. Voltag Gym a 6 minutos, con equipos de calidad y planes desde $70.000. ¡Entrena hoy!',
+    metaDescription: 'El gym del Sector 12, Manzanares. Voltag Gym a 6 minutos, con equipos de calidad y planes desde $69.000. ¡Entrena hoy!',
   },
   // ── Manzanares Sector 15 ──────────────────────────────────────────────────
   {
@@ -169,7 +169,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Acceso sector 15-16', 'Vía Ciudad del Valle'],
     keywords: ['gimnasio manzanares sector 15', 'gym cerca de sector 15 candelaria'],
     metaTitle: 'Gimnasio Manzanares Sector 15 | Voltag Gym — a 4 min',
-    metaDescription: 'Desde Sector 15 de Manzanares a Voltag Gym son 4 minutos. Entrena con equipos pros y paga desde $70.000/mes.',
+    metaDescription: 'Desde Sector 15 de Manzanares a Voltag Gym son 4 minutos. Entrena con equipos pros y paga desde $69.000/mes.',
   },
   // ── Manzanares Sector 20 ──────────────────────────────────────────────────
   {
@@ -184,7 +184,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Zona residencial sector 20', 'Cancha sector 20'],
     keywords: ['gimnasio manzanares sector 20', 'gym sur candelaria', 'gym ciudad del valle'],
     metaTitle: 'Gimnasio Manzanares Sector 20 | Voltag Gym Ciudad del Valle',
-    metaDescription: 'Desde Manzanares Sector 20 hasta Voltag Gym son 5 minutos. El gym más completo de Candelaria. Planes desde $70.000 COP.',
+    metaDescription: 'Desde Manzanares Sector 20 hasta Voltag Gym son 5 minutos. El gym más completo de Candelaria. Planes desde $69.000 COP.',
   },
   // ── Manzanares Sector 25 ──────────────────────────────────────────────────
   {
@@ -199,7 +199,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Residencias sector 25', 'Via Manzanares-Candelaria central'],
     keywords: ['gimnasio manzanares 25', 'gym cerca sector 25'],
     metaTitle: 'Gimnasio Manzanares Sector 25 | Voltag Gym — el gym definitivo',
-    metaDescription: 'El gym de Manzanares Sector 25: Voltag Gym a 8 minutos. Equipos pro, planes desde $70.000. Sin ir hasta Cali.',
+    metaDescription: 'El gym de Manzanares Sector 25: Voltag Gym a 8 minutos. Equipos pro, planes desde $69.000. Sin ir hasta Cali.',
   },
   // ── Manzanares Sector 30 ──────────────────────────────────────────────────
   {
@@ -210,11 +210,11 @@ export const locations: GymLocation[] = [
     distanceText: 'a 10 minutos en moto',
     distanceMinutes: 10,
     hook: 'Sector 30 de Manzanares — 10 minutos es todo lo que te separa de Voltag.',
-    description: 'Para los del Sector 30 de Manzanares, el gym de calidad ya no queda lejos. Voltag Gym está a 10 minutos en moto, con 2 pisos de equipos profesionales, entrenadores certificados y suplementos deportivos. Más cercano que cualquier gym de Cali y con resultados que hablan solos. Planes desde $70.000 al mes.',
+    description: 'Para los del Sector 30 de Manzanares, el gym de calidad ya no queda lejos. Voltag Gym está a 10 minutos en moto, con 2 pisos de equipos profesionales, entrenadores certificados y suplementos deportivos. Más cercano que cualquier gym de Cali y con resultados que hablan solos. Planes desde $69.000 al mes.',
     nearbyLandmarks: ['Conjunto residencial 30', 'Via principal Manzanares norte'],
     keywords: ['gimnasio manzanares sector 30', 'gym manzanares norte'],
     metaTitle: 'Gimnasio Manzanares Sector 30 | Voltag Gym — 10 min de ti',
-    metaDescription: 'Desde Manzanares Sector 30 a Voltag Gym son 10 minutos. Entrena con equipos de calidad. Planes desde $70.000 COP.',
+    metaDescription: 'Desde Manzanares Sector 30 a Voltag Gym son 10 minutos. Entrena con equipos de calidad. Planes desde $69.000 COP.',
   },
   // ── Manzanares Sector 35 ──────────────────────────────────────────────────
   {
@@ -229,7 +229,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Límite norte Manzanares', 'Sector residencial 35'],
     keywords: ['gimnasio manzanares sector 35', 'gym candelaria norte'],
     metaTitle: 'Gimnasio Manzanares Sector 35 | Voltag Gym Candelaria',
-    metaDescription: 'Desde Manzanares Sector 35 a Voltag Gym son 12 minutos. El gym más completo de Candelaria te espera. Planes desde $70.000.',
+    metaDescription: 'Desde Manzanares Sector 35 a Voltag Gym son 12 minutos. El gym más completo de Candelaria te espera. Planes desde $69.000.',
   },
   // ── Poblado Campestre ─────────────────────────────────────────────────────
   {
@@ -239,11 +239,11 @@ export const locations: GymLocation[] = [
     distanceText: 'a 5 minutos en moto o carro',
     distanceMinutes: 5,
     hook: 'Poblado Campestre tiene el gym que nunca pensó que tendría tan cerca.',
-    description: 'Los residentes de Poblado Campestre ya saben el secreto: Voltag Gym está a solo 5 minutos, pasando por la vía principal. Un gimnasio de verdad — no un cuarto con unas mancuernas — con 2 pisos de equipos de grado comercial, entrenadores certificados, suplementos y la energía que impulsa a los mejores atletas del sur de Cali. Planes desde $70.000.',
+    description: 'Los residentes de Poblado Campestre ya saben el secreto: Voltag Gym está a solo 5 minutos, pasando por la vía principal. Un gimnasio de verdad — no un cuarto con unas mancuernas — con 2 pisos de equipos de grado comercial, entrenadores certificados, suplementos y la energía que impulsa a los mejores atletas del sur de Cali. Planes desde $69.000.',
     nearbyLandmarks: ['Conjunto Poblado Campestre', 'Vía Ciudad del Valle', 'Club campestre'],
     keywords: ['gimnasio poblado campestre', 'gym poblado campestre candelaria', 'gym cerca de poblado campestre'],
     metaTitle: 'Gimnasio en Poblado Campestre | Voltag Gym — a 5 min',
-    metaDescription: 'Desde Poblado Campestre a Voltag Gym son 5 minutos. El mejor gym cerca de ti. Equipos pro, planes desde $70.000 y entrenadores certificados.',
+    metaDescription: 'Desde Poblado Campestre a Voltag Gym son 5 minutos. El mejor gym cerca de ti. Equipos pro, planes desde $69.000 y entrenadores certificados.',
     competitors: ['Tauros Gym'],
   },
   // ── Arboleda Campestre ────────────────────────────────────────────────────
@@ -258,7 +258,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Conjunto Arboleda Campestre', 'Via Candelaria-Palmira', 'Zona verde Arboleda'],
     keywords: ['gimnasio arboleda campestre', 'gym arboleda campestre candelaria', 'gym cerca de arboleda'],
     metaTitle: 'Gimnasio en Arboleda Campestre | Voltag Gym Candelaria',
-    metaDescription: 'Voltag Gym es el gym más cercano a Arboleda Campestre. A 5 minutos, con equipos profesionales y planes desde $70.000 COP.',
+    metaDescription: 'Voltag Gym es el gym más cercano a Arboleda Campestre. A 5 minutos, con equipos profesionales y planes desde $69.000 COP.',
     competitors: ['Tauros Gym', 'Leandro Gym'],
   },
   // ── Ciudad del Valle ──────────────────────────────────────────────────────
@@ -273,7 +273,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Ciudad del Valle centro', 'Colegio Ciudad del Valle', 'Parque principal'],
     keywords: ['gimnasio ciudad del valle', 'gym ciudad del valle candelaria', 'gimnasio en ciudad del valle'],
     metaTitle: 'Gimnasio en Ciudad del Valle, Candelaria | Voltag Gym',
-    metaDescription: 'El mejor gimnasio en Ciudad del Valle, Candelaria. Voltag Gym con equipos profesionales, entrenadores certificados y planes desde $70.000.',
+    metaDescription: 'El mejor gimnasio en Ciudad del Valle, Candelaria. Voltag Gym con equipos profesionales, entrenadores certificados y planes desde $69.000.',
     competitors: ['Tauros Gym', 'Leandro Gym'],
   },
   // ── Candelaria ────────────────────────────────────────────────────────────
@@ -284,11 +284,11 @@ export const locations: GymLocation[] = [
     distanceText: 'en Candelaria',
     distanceMinutes: 5,
     hook: 'El mejor gimnasio de Candelaria no está en el centro — está en tu sector.',
-    description: 'Voltag Gym es el gimnasio de referencia de Candelaria, Valle del Cauca. Ubicado en Manzanares Sector 17, Cl 12 # 20 Oeste - 10, ofrecemos lo que los candelareños merecen: equipos profesionales de grado comercial, entrenadores certificados, asesoría nutricional, suplementos deportivos y la comunidad fitness más fuerte del municipio. Planes desde $70.000.',
+    description: 'Voltag Gym es el gimnasio de referencia de Candelaria, Valle del Cauca. Ubicado en Manzanares Sector 17, Cl 12 # 20 Oeste - 10, ofrecemos lo que los candelareños merecen: equipos profesionales de grado comercial, entrenadores certificados, asesoría nutricional, suplementos deportivos y la comunidad fitness más fuerte del municipio. Planes desde $69.000.',
     nearbyLandmarks: ['Alcaldía Candelaria', 'Parque principal Candelaria', 'Hospital Candelaria'],
     keywords: ['gimnasio candelaria', 'gym candelaria valle del cauca', 'mejor gimnasio candelaria'],
     metaTitle: 'Gimnasio en Candelaria Valle del Cauca | Voltag Gym',
-    metaDescription: 'El mejor gimnasio de Candelaria está en Manzanares. Voltag Gym con 2 pisos de equipo profesional, entrenadores y planes desde $70.000.',
+    metaDescription: 'El mejor gimnasio de Candelaria está en Manzanares. Voltag Gym con 2 pisos de equipo profesional, entrenadores y planes desde $69.000.',
     competitors: ['Tauros Gym', 'Leandro Gym'],
   },
   // ── Sur de Cali ───────────────────────────────────────────────────────────
@@ -303,7 +303,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Autopista Cali-Palmira', 'Sector sur Cali', 'Candelaria sur'],
     keywords: ['gimnasio sur de cali', 'gym al sur de cali', 'gimnasio cerca de cali candelaria'],
     metaTitle: 'Gimnasio al Sur de Cali | Voltag Gym en Candelaria',
-    metaDescription: 'El mejor gym al sur de Cali está en Candelaria. Voltag Gym a 20 min, con equipos pro y planes desde $70.000. Sin tráfico, sin precios caleños.',
+    metaDescription: 'El mejor gym al sur de Cali está en Candelaria. Voltag Gym a 20 min, con equipos pro y planes desde $69.000. Sin tráfico, sin precios caleños.',
     competitors: ['Bodytech', 'Smart Fit'],
   },
 ];
