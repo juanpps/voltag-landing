@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { signInWithRedirect, getRedirectResult, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../../utils/firebase.client';
 
 export default function Login() {
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true); // Start as loading while we check redirect result
+  const [loading, setLoading] = useState(false);
+  const [checkingRedirect, setCheckingRedirect] = useState(true);
 
   useEffect(() => {
-    const checkRedirect = async () => {
+    const handleRedirectResult = async () => {
       try {
         const result = await getRedirectResult(auth);
         if (result) {
@@ -21,30 +22,52 @@ export default function Login() {
           }
         }
       } catch (err) {
-        console.error(err);
-        setError('Ocurrió un error al procesar el inicio de sesión.');
+        console.error("Redirect result error:", err);
+        setError('Ocurrió un error al procesar el retorno de Google.');
       } finally {
-        setLoading(false);
+        setCheckingRedirect(false);
       }
     };
-    checkRedirect();
+    handleRedirectResult();
   }, []);
 
   const handleGoogleLogin = async () => {
     setError('');
     setLoading(true);
 
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+
     try {
-      const provider = new GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: 'select_account' });
-      await signInWithRedirect(auth, provider);
-      // The page will redirect away here
+      // 1. Try popup first (best experience)
+      await signInWithPopup(auth, provider);
     } catch (err) {
-      console.error(err);
-      setError('Ocurrió un error al intentar ir a Google.');
-      setLoading(false);
+      console.warn("Popup blocked or failed, falling back to redirect:", err.code);
+      if (err.code === 'auth/popup-blocked' || err.code === 'auth/cancelled-popup-request') {
+        try {
+          // 2. Fallback to redirect if popup is blocked
+          await signInWithRedirect(auth, provider);
+        } catch (reErr) {
+          console.error("Redirect fallback failed:", reErr);
+          setError('No fue posible conectar con Google. Revisa tu conexión.');
+          setLoading(false);
+        }
+      } else {
+        setError('Error al conectar con Google. Por favor intenta de nuevo.');
+        setLoading(false);
+      }
     }
   };
+
+  if (checkingRedirect) {
+    return (
+      <div style={styles.container}>
+        <div style={styles.card}>
+          <p style={{...styles.subtitle, textAlign: 'center'}}>Verificando sesión...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={styles.container}>
@@ -76,7 +99,7 @@ export default function Login() {
               <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
-            {loading ? 'Cerrando sesión...' : 'Continuar con Google'}
+            {loading ? 'Cargando Google...' : 'Entrar con Google'}
           </button>
         </div>
       </div>
