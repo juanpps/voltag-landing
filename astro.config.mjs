@@ -4,7 +4,7 @@ import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://voltag-gym.com',
+  site: 'https://voltag-landing.vercel.app',
   output: 'static',
   integrations: [react(), sitemap()],
   adapter: vercel(),
