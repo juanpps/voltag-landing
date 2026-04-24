@@ -63,6 +63,7 @@ const navLinks = [
 
 <!-- Mobile Menu (Outside Nav to break stacking context) -->
 <div class="nav-mobile-overlay" id="nav-mobile">
+  <button class="nav-mobile-close" id="close-nav-mobile" aria-label="Cerrar menú">&times;</button>
   <ul class="nav-mobile-links">
     {navLinks.map(link => (
       <li><a href={link.href} class="nav-mobile-link">{link.label}</a></li>
@@ -92,6 +93,8 @@ const navLinks = [
       lastScroll = currentScroll;
     });
 
+    const closeBtn = document.getElementById('close-nav-mobile');
+
     hamburger?.addEventListener('click', () => {
       const isOpening = !mobileMenu?.classList.contains('nav-mobile-overlay--open');
       mobileMenu?.classList.toggle('nav-mobile-overlay--open');
@@ -105,6 +108,12 @@ const navLinks = [
       } else {
         document.body.classList.remove('no-scroll');
       }
+    });
+
+    closeBtn?.addEventListener('click', () => {
+      mobileMenu?.classList.remove('nav-mobile-overlay--open');
+      hamburger?.classList.remove('nav__hamburger--active');
+      document.body.classList.remove('no-scroll');
     });
 
     mobileLinks.forEach(link => {
@@ -275,6 +284,19 @@ const navLinks = [
     justify-content: center;
     gap: 40px;
     z-index: 2000;
+  }
+
+  .nav-mobile-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 3rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 10px;
   }
 
   .nav-mobile-overlay--open {
