@@ -105,7 +105,7 @@ export const locations: GymLocation[] = [
     distanceText: 'a 5 minutos',
     distanceMinutes: 5,
     hook: 'Sector 5 de Manzanares: hay un gym de verdad más cerca de lo que crees.',
-    description: 'Si buscas un gimnasio desde el Sector 5 de Manzanares, Voltag Gym es tu respuesta. Estamos a 5 minutos y ofrecemos lo que ningún otro gym del área tiene: equipos de grado comercial, entrenadores con certificación, comunidad motivada y un ambiente diferente. Entrena antes del trabajo, al mediodía o en la noche — abrimos desde las 5am hasta las 10pm de lunes a viernes.',
+    description: 'Si buscas un gimnasio desde el Sector 5 de Manzanares, Voltag Gym es tu respuesta. Estamos a 5 minutos y ofrecemos lo que ningún otro gym del área tiene: equipos de grado comercial, entrenadores con certificación, comunidad motivada y un ambiente diferente. Entrena antes del trabajo, al mediodía o en la noche — abrimos desde las 5:30 am hasta las 10pm de lunes a viernes.',
     nearbyLandmarks: ['Residencias sector 5', 'Manzanares norte'],
     keywords: ['gimnasio manzanares 5', 'gym cerca de sector 5 candelaria'],
     metaTitle: 'Gimnasio Manzanares Sector 5 | Voltag Gym Candelaria Valle',
@@ -139,7 +139,7 @@ export const locations: GymLocation[] = [
     nearbyLandmarks: ['Zona comercial Manzanares', 'Escuela Manzanares'],
     keywords: ['gimnasio manzanares sector 10', 'gym cerca candelaria sector 10'],
     metaTitle: 'Gimnasio Manzanares Sector 10 | Voltag Gym Candelaria',
-    metaDescription: 'Entrena desde Manzanares Sector 10 en Voltag Gym, a solo 8 minutos. Planes desde $69.000, equipos pro, abierto desde las 5am.',
+    metaDescription: 'Entrena desde Manzanares Sector 10 en Voltag Gym, a solo 8 minutos. Planes desde $69.000, equipos pro, abierto desde las 5:30 am.',
   },
   // ── Manzanares Sector 12 ──────────────────────────────────────────────────
   {
