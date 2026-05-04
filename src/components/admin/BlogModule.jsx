@@ -45,9 +45,13 @@ export default function BlogModule() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleContentChange = (content) => {
-    setFormData(prev => ({ ...prev, content }));
-  };
+  const handleContentChange = React.useCallback((content) => {
+    setFormData(prev => {
+      // Prevents infinite loop if content is identical
+      if (prev.content === content) return prev;
+      return { ...prev, content };
+    });
+  }, []);
 
   const generateSEO = () => {
     let newSlug = formData.slug;
