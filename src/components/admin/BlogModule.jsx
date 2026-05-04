@@ -94,133 +94,149 @@ export default function BlogModule() {
 
   return (
     <div className="admin-module">
-      <div className="module-header">
-        <h2>{editingPost ? 'Editar Artículo' : 'Nuevo Artículo (SEO)'}</h2>
+      <div className="admin-title-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '32px' }}>
+        <div>
+          <h1 style={styles.title}>{editingPost ? 'Editar Artículo' : 'Nuevo Artículo (SEO)'}</h1>
+          <p style={styles.subtitle}>Redacta artículos para posicionar en Google. Asegúrate de usar palabras clave relevantes.</p>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="admin-form">
-        <div className="form-row">
-          <div className="form-group">
-            <label>Título (H1)</label>
+      <div style={styles.section}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <div className="admin-module-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+            <div style={styles.inputGroup}>
+              <label style={styles.label}>Título (H1)</label>
+              <input 
+                type="text" 
+                name="title" 
+                value={formData.title} 
+                onChange={handleInputChange} 
+                style={styles.input}
+                required 
+                placeholder="Ej: Las 5 mejores rutinas para ganar masa muscular"
+              />
+            </div>
+            <div style={styles.inputGroup}>
+              <label style={styles.label}>Slug (URL amigable)</label>
+              <input 
+                type="text" 
+                name="slug" 
+                value={formData.slug} 
+                onChange={handleInputChange} 
+                style={{ ...styles.input, opacity: editingPost ? 0.5 : 1 }}
+                required 
+                disabled={editingPost !== null}
+                placeholder="ej: rutinas-ganar-masa-muscular"
+              />
+            </div>
+          </div>
+
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Extracto (Meta Description para Google)</label>
+            <textarea 
+              name="excerpt" 
+              value={formData.excerpt} 
+              onChange={handleInputChange} 
+              style={{ ...styles.input, minHeight: '60px' }}
+              rows="2" 
+              required
+              placeholder="Breve resumen persuasivo del artículo..."
+            />
+          </div>
+
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Palabras Clave (Keywords separadas por coma)</label>
             <input 
               type="text" 
-              name="title" 
-              value={formData.title} 
+              name="keywords" 
+              value={formData.keywords} 
               onChange={handleInputChange} 
-              required 
-              placeholder="Ej: Las 5 mejores rutinas para ganar masa muscular"
+              style={styles.input}
+              placeholder="ej: gimnasio candelaria, ganar masa muscular, voltag gym"
             />
           </div>
-          <div className="form-group">
-            <label>Slug (URL) <small>(Importante para SEO)</small></label>
-            <input 
-              type="text" 
-              name="slug" 
-              value={formData.slug} 
+
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Contenido Principal (Markdown)</label>
+            <textarea 
+              name="content" 
+              value={formData.content} 
               onChange={handleInputChange} 
-              required 
-              disabled={editingPost !== null}
-              placeholder="ej: rutinas-ganar-masa-muscular"
+              style={{ ...styles.input, minHeight: '300px', fontFamily: 'monospace' }}
+              rows="10" 
+              required
+              placeholder="Escribe aquí el contenido del artículo. Usa # para títulos, ** para negrita."
             />
           </div>
-        </div>
 
-        <div className="form-group">
-          <label>Extracto (Meta Description)</label>
-          <textarea 
-            name="excerpt" 
-            value={formData.excerpt} 
-            onChange={handleInputChange} 
-            rows="2" 
-            required
-            placeholder="Breve resumen del artículo que aparecerá en Google..."
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Palabras Clave (Keywords separadas por coma)</label>
-          <input 
-            type="text" 
-            name="keywords" 
-            value={formData.keywords} 
-            onChange={handleInputChange} 
-            placeholder="ej: gimnasio candelaria, ganar masa muscular, voltag gym"
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Contenido Principal (Markdown o HTML Básico)</label>
-          <textarea 
-            name="content" 
-            value={formData.content} 
-            onChange={handleInputChange} 
-            rows="10" 
-            required
-            placeholder="Escribe aquí el contenido del artículo. Puedes usar HTML básico como <h2>, <strong>, <p>, <ul> y <li>."
-            style={{ fontFamily: 'monospace' }}
-          />
-        </div>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label>URL Imagen Destacada</label>
-            <input 
-              type="url" 
-              name="imageUrl" 
-              value={formData.imageUrl} 
-              onChange={handleInputChange} 
-              placeholder="https://..."
-            />
+          <div className="admin-module-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+            <div style={styles.inputGroup}>
+              <label style={styles.label}>URL Imagen Destacada</label>
+              <input 
+                type="url" 
+                name="imageUrl" 
+                value={formData.imageUrl} 
+                onChange={handleInputChange} 
+                style={styles.input}
+                placeholder="https://..."
+              />
+            </div>
+            <div style={styles.inputGroup}>
+              <label style={styles.label}>Autor</label>
+              <input 
+                type="text" 
+                name="author" 
+                value={formData.author} 
+                onChange={handleInputChange} 
+                style={styles.input}
+                required 
+              />
+            </div>
           </div>
-          <div className="form-group">
-            <label>Autor</label>
-            <input 
-              type="text" 
-              name="author" 
-              value={formData.author} 
-              onChange={handleInputChange} 
-              required 
-            />
-          </div>
-        </div>
 
-        <div className="form-actions">
-          {editingPost && (
-            <button type="button" className="btn-cancel" onClick={cancelEdit}>
-              Cancelar Edición
+          <div style={{ display: 'flex', gap: '16px', marginTop: '16px' }}>
+            {editingPost && (
+              <button type="button" onClick={cancelEdit} style={{ ...styles.button, background: '#333' }}>
+                Cancelar Edición
+              </button>
+            )}
+            <button type="submit" style={styles.button}>
+              {editingPost ? 'Actualizar Artículo' : 'Publicar Artículo'}
             </button>
-          )}
-          <button type="submit" className="btn-save">
-            {editingPost ? 'Actualizar Artículo' : 'Publicar Artículo'}
-          </button>
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
 
-      <div className="module-header" style={{ marginTop: '40px' }}>
-        <h2>Artículos Publicados</h2>
+      <div className="admin-title-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', margin: '48px 0 24px 0' }}>
+        <div>
+          <h2 style={styles.title}>Artículos Publicados</h2>
+          <p style={styles.subtitle}>Gestiona el contenido de tu blog.</p>
+        </div>
       </div>
 
       {loading ? (
-        <p>Cargando artículos...</p>
+        <p style={{ color: '#aaa' }}>Cargando artículos...</p>
       ) : posts.length === 0 ? (
-        <p className="empty-state">No hay artículos publicados todavía.</p>
+        <div style={styles.section}>
+          <p style={{ color: '#888', textAlign: 'center', margin: 0 }}>No hay artículos publicados todavía.</p>
+        </div>
       ) : (
-        <div className="items-list">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {posts.map(post => (
-            <div key={post.id} className="list-item" style={{ alignItems: 'flex-start' }}>
-              <div className="item-info">
-                <h3>{post.title}</h3>
-                <p style={{ fontSize: '0.85rem', color: '#666', marginBottom: '8px' }}>
+            <div key={post.id} style={{ ...styles.section, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '24px', marginBottom: 0 }}>
+              <div>
+                <h3 style={{ margin: '0 0 8px 0', fontSize: '1.2rem' }}>{post.title}</h3>
+                <p style={{ color: '#888', fontSize: '0.85rem', margin: '0 0 8px 0' }}>
                   /{post.slug} • {new Date(post.createdAt).toLocaleDateString()}
                 </p>
-                <p style={{ fontSize: '0.9rem' }}>{post.excerpt}</p>
+                <p style={{ color: '#aaa', fontSize: '0.9rem', margin: 0 }}>{post.excerpt}</p>
               </div>
-              <div className="item-actions">
-                <button onClick={() => handleEdit(post)} className="btn-edit">
-                  ✏️ Editar
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <button onClick={() => handleEdit(post)} style={{ background: 'transparent', border: '1px solid #4caf50', color: '#4caf50', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer' }}>
+                  Editar
                 </button>
-                <button onClick={() => handleDelete(post.id)} className="btn-delete">
-                  🗑️ Eliminar
+                <button onClick={() => handleDelete(post.id)} style={{ background: 'transparent', border: '1px solid #d41920', color: '#d41920', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer' }}>
+                  Eliminar
                 </button>
               </div>
             </div>
@@ -230,3 +246,13 @@ export default function BlogModule() {
     </div>
   );
 }
+
+const styles = {
+  title: { fontFamily: 'var(--font-heading)', fontSize: '2rem', margin: '0 0 8px 0', color: '#fff' },
+  subtitle: { color: '#888', margin: 0 },
+  section: { background: '#0f0f0f', border: '1px solid rgba(255,255,255,0.05)', padding: '32px', borderRadius: '12px', marginBottom: '24px' },
+  inputGroup: { display: 'flex', flexDirection: 'column', gap: '8px' },
+  label: { color: '#aaa', fontSize: '0.8rem', fontWeight: '600' },
+  input: { background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', padding: '12px 16px', color: '#fff', borderRadius: '6px', outline: 'none' },
+  button: { background: '#d41920', color: '#fff', border: 'none', padding: '12px 24px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' },
+};

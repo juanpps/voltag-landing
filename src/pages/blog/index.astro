@@ -18,9 +18,26 @@ try {
 
 const title = "Blog Voltag Gym | Entrenamiento, Nutrición y Fitness en Candelaria";
 const description = "Descubre consejos de entrenamiento, rutinas para ganar masa muscular, nutrición y todo lo que necesitas saber para transformar tu cuerpo en Voltag Gym.";
+
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": title,
+  "description": description,
+  "url": "https://voltag-gym.com/blog",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Voltag Gym",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://voltag-gym.com/logo-white.png"
+    }
+  }
+};
 ---
 
 <Layout title={title} description={description}>
+  <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} slot="head"></script>
   <Nav />
   
   <main class="blog-archive">

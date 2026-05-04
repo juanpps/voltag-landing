@@ -48,6 +48,30 @@ const parseMarkdown = (text) => {
 };
 
 const contentHtml = parseMarkdown(post.content);
+
+// Schema.org Structured Data
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": post.title,
+  "description": post.excerpt,
+  "image": post.imageUrl ? [post.imageUrl] : [],
+  "datePublished": new Date(post.createdAt).toISOString(),
+  "dateModified": new Date(post.updatedAt || post.createdAt).toISOString(),
+  "author": [{
+      "@type": "Person",
+      "name": post.author,
+      "url": "https://voltag-gym.com/"
+  }],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Voltag Gym",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://voltag-gym.com/logo-white.png"
+    }
+  }
+};
 ---
 
 <Layout 
@@ -55,6 +79,8 @@ const contentHtml = parseMarkdown(post.content);
   description={post.excerpt}
   ogImage={post.imageUrl || '/og-image.jpg'}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} slot="head"></script>
+
   <Nav />
   
   <main class="blog-post">
