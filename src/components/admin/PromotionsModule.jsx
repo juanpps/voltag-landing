@@ -11,7 +11,7 @@ export default function PromotionsModule() {
     modalCta: 'Aprovechar Oferta',
     modalLink: 'https://wa.me/573180046952',
     bannerActive: false,
-    bannerText: '🔥 ¡Nuevos horarios desde las 5AM! 🔥'
+    bannerText: '🔥 ¡Nuevos horarios desde las 5:30AM! 🔥'
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);

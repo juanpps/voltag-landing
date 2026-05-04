@@ -1,71 +1,104 @@
 ---
 import { Image } from 'astro:assets';
 import aboutImg from '../assets/images/about/about-founder.jpg';
-
-const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
-const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hola! Quiero saber más sobre Voltag Gym 💪')}`;
+import aboutGroup1 from '../assets/images/about/about-group-1.jpg';
+import aboutGroup2 from '../assets/images/about/about-group-2.jpg';
 ---
 
 <section class="about" id="nosotros">
-  <div class="container about__grid">
-    <div class="about__image-col reveal">
-      <div class="about__image-frame">
-        <Image
-          src={aboutImg}
-          alt="Equipo fundador de Voltag Gym frente a las instalaciones en Manzanares, Candelaria"
-          width={600}
-          height={750}
-          quality={80}
-          format="webp"
-          class="about__img"
-        />
-        <div class="about__image-badge">
-          <span class="about__image-badge-year">2024</span>
-          <span class="about__image-badge-label">Since</span>
-        </div>
-        <div class="about__image-accent"></div>
-      </div>
-    </div>
-
-    <div class="about__content reveal">
-      <div class="section-badge">Nosotros</div>
-      <h2 class="section-title">
-        El Gym Que Tu<br /><span>Barrio Merecía</span>
-      </h2>
-      <p class="section-subtitle">
-        Voltag nació con una misión clara: llevar un gimnasio de calidad profesional al corazón de Manzanares Sector 17. 
-        Creemos que no necesitas ir hasta Cali para entrenar como un pro.
-      </p>
-      <p class="about__text">
-        Equipos de primera línea, entrenadores certificados y un ambiente que te impulsa a dar lo mejor 
-        de ti cada día. Aquí no solo vienes a levantar peso — vienes a transformar tu vida.
-      </p>
-
-      <div class="about__features">
-        <div class="about__feature">
-          <span class="about__feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          </span>
-          <div>
-            <strong>Equipos Profesionales</strong>
-            <p>Máquinas y peso libre de grado comercial</p>
+  <div class="container">
+    <div class="about__layout">
+      <!-- Image Gallery Column -->
+      <div class="about__gallery reveal">
+        <div class="about__gallery-item about__gallery-item--main">
+          <Image
+            src={aboutImg}
+            alt="Equipo fundador de Voltag Gym"
+            width={600}
+            height={500}
+            quality={80}
+            format="webp"
+            class="about__gallery-img"
+          />
+          <div class="about__gallery-overlay"></div>
+          <div class="about__gallery-label">Nuestro Equipo</div>
+          <div class="about__gallery-corner"></div>
+          <div class="about__badge">
+            <span class="about__badge-year">2024</span>
+            <span class="about__badge-label">Since</span>
           </div>
         </div>
-        <div class="about__feature">
-          <span class="about__feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-          </span>
-          <div>
-            <strong>Ambiente Único</strong>
-            <p>Iluminación hexagonal, música y la mejor energía</p>
-          </div>
+        <div class="about__gallery-item">
+          <Image
+            src={aboutGroup1}
+            alt="Grupo de miembros de Voltag Gym entrenando juntos"
+            width={400}
+            height={400}
+            quality={75}
+            format="webp"
+            class="about__gallery-img"
+          />
+          <div class="about__gallery-overlay"></div>
+          <div class="about__gallery-label">La Familia</div>
+          <div class="about__gallery-corner"></div>
+        </div>
+        <div class="about__gallery-item">
+          <Image
+            src={aboutGroup2}
+            alt="Comunidad Voltag Gym posando en el segundo piso"
+            width={400}
+            height={400}
+            quality={75}
+            format="webp"
+            class="about__gallery-img"
+          />
+          <div class="about__gallery-overlay"></div>
+          <div class="about__gallery-label">Comunidad</div>
+          <div class="about__gallery-corner"></div>
         </div>
       </div>
 
-      <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="about-cta">
-        Empieza ahora
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+      <!-- Text Content Column -->
+      <div class="about__content reveal">
+        <div class="section-badge">Nosotros</div>
+        <h2 class="section-title">
+          El Gym Que Tu<br /><span>Barrio Merecía</span>
+        </h2>
+        <p class="section-subtitle">
+          Voltag nació con una misión clara: llevar un gimnasio de calidad profesional al corazón de Manzanares Sector 17. 
+          Creemos que no necesitas ir hasta Cali para entrenar como un pro.
+        </p>
+        <p class="about__text">
+          Equipos de primera línea, entrenadores certificados y un ambiente que te impulsa a dar lo mejor 
+          de ti cada día. Aquí no solo vienes a levantar peso — vienes a transformar tu vida.
+        </p>
+
+        <div class="about__features">
+          <div class="about__feature">
+            <span class="about__feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </span>
+            <div>
+              <strong>Equipos Profesionales</strong>
+              <p>Máquinas y peso libre de grado comercial</p>
+            </div>
+          </div>
+          <div class="about__feature">
+            <span class="about__feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </span>
+            <div>
+              <strong>Ambiente Único</strong>
+              <p>Iluminación hexagonal, música y la mejor energía</p>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" id="about-cta" onclick="window.dispatchEvent(new Event('open-signup-wizard'))">
+          Empieza ahora
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 </section>
@@ -76,66 +109,127 @@ const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hol
     overflow: hidden;
   }
 
-  .about__grid {
+  .about__layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: center;
   }
 
-  .about__image-frame {
-    position: relative;
+  /* Gallery Grid */
+  .about__gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
 
-  .about__img {
+  .about__gallery-item--main {
+    grid-column: 1 / -1;
+  }
+
+  .about__gallery-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .about__gallery-img {
     width: 100%;
     height: auto;
-    object-fit: cover;
-    border-radius: 2px;
-    filter: contrast(1.05);
+    display: block;
+    transition: all 0.7s var(--transition);
+    filter: saturate(0.7) brightness(0.85);
   }
 
-  .about__image-badge {
+  .about__gallery-item:hover .about__gallery-img {
+    transform: scale(1.1);
+    filter: saturate(1) brightness(0.7);
+  }
+
+  .about__gallery-overlay {
     position: absolute;
-    top: 24px;
-    right: -20px;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5,5,5,0.7), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .about__gallery-item:hover .about__gallery-overlay {
+    opacity: 1;
+  }
+
+  .about__gallery-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 14px 18px;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    transform: translateY(100%);
+    transition: transform 0.4s var(--transition);
+    z-index: 2;
+  }
+
+  .about__gallery-item:hover .about__gallery-label {
+    transform: translateY(0);
+  }
+
+  .about__gallery-corner {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid var(--red);
+    border-right: 2px solid var(--red);
+    opacity: 0;
+    transition: opacity 0.4s, transform 0.4s;
+    transform: translate(10px, -10px);
+    z-index: 2;
+  }
+
+  .about__gallery-item:hover .about__gallery-corner {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  .about__badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
     background: var(--red);
-    padding: 16px 20px;
+    padding: 14px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    width: 80px;
-    height: 90px;
+    width: 72px;
+    height: 82px;
     justify-content: center;
+    z-index: 3;
   }
 
-  .about__image-badge-year {
+  .about__badge-year {
     font-family: var(--font-display);
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     color: var(--white-pure);
     line-height: 1;
   }
 
-  .about__image-badge-label {
+  .about__badge-label {
     font-family: var(--font-heading);
-    font-size: 0.55rem;
+    font-size: 0.5rem;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: rgba(255,255,255,0.8);
   }
 
-  .about__image-accent {
-    position: absolute;
-    bottom: -12px;
-    left: -12px;
-    width: 120px;
-    height: 120px;
-    border: 2px solid var(--red);
-    opacity: 0.3;
-    z-index: -1;
-  }
-
+  /* Content */
   .about__content {
     padding-left: 20px;
   }
@@ -192,18 +286,34 @@ const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hol
     text-decoration: none;
   }
 
+  /* Mobile */
   @media (max-width: 900px) {
-    .about__grid {
+    .about__layout {
       grid-template-columns: 1fr;
       gap: 40px;
+    }
+
+    .about__gallery-label {
+      transform: translateY(0);
+      font-size: 0.65rem;
+    }
+
+    .about__gallery-corner {
+      opacity: 0.4;
+      transform: translate(0, 0);
     }
 
     .about__content {
       padding-left: 0;
     }
 
-    .about__image-badge {
-      right: 12px;
+    .about__badge {
+      width: 60px;
+      height: 68px;
+    }
+
+    .about__badge-year {
+      font-size: 0.95rem;
     }
   }
 </style>

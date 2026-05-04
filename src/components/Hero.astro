@@ -3,8 +3,7 @@ import PromoTopBanner from './PromoTopBanner.jsx';
 import { Image } from 'astro:assets';
 import heroImg from '../assets/images/hero/hero-gym.jpg';
 
-const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
-const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hola Voltag! 💪 Quiero empezar a entrenar hoy.')}`;
+
 ---
 
 <section class="hero scanlines" id="hero">
@@ -42,10 +41,10 @@ const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hol
     </p>
 
     <div class="hero__ctas">
-      <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="hero-cta-primary">
+      <button class="btn btn-primary" id="hero-cta-primary" onclick="window.dispatchEvent(new Event('open-signup-wizard'))">
         Empieza hoy
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+      </button>
       <a href="#instalaciones" class="btn btn-secondary" id="hero-cta-secondary">
         Ver instalaciones
       </a>

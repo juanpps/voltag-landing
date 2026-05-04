@@ -2,8 +2,7 @@
 import { Image } from 'astro:assets';
 import ctaBg from '../assets/images/community/community-exterior.jpg';
 
-const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
-const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hola Voltag! 💪 Quiero empezar a entrenar ya.')}`;
+
 ---
 
 <section class="cta-strip" id="cta-strip">
@@ -27,10 +26,10 @@ const ctaUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hol
         Tu mejor versión está a un mensaje de distancia. Escríbenos y empieza hoy mismo.
       </p>
     </div>
-    <a href={ctaUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary cta-strip__btn reveal" id="cta-strip-btn">
-      Escríbenos al WhatsApp
+    <button class="btn btn-primary cta-strip__btn reveal" id="cta-strip-btn" onclick="window.dispatchEvent(new Event('open-signup-wizard'))">
+      Inscríbete Ahora
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
+    </button>
   </div>
 </section>
 

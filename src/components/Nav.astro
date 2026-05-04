@@ -17,7 +17,7 @@ try {
   }
 } catch(e) { /* fallback active */ }
 
-const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('¡Hola Voltag! 💪 Quiero inscribirme al gym.')}`;
+const whatsappUrl = '#';
 
 const navLinks = [
   { label: 'Nosotros', href: '#nosotros' },
@@ -49,9 +49,9 @@ const navLinks = [
       ))}
     </ul>
 
-    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary nav__cta" id="nav-cta">
+    <button class="btn btn-primary nav__cta" id="nav-cta" onclick="window.dispatchEvent(new Event('open-signup-wizard'))">
       Únete ahora
-    </a>
+    </button>
 
     <button class="nav__hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
       <span></span>
@@ -69,10 +69,10 @@ const navLinks = [
       <li><a href={link.href} class="nav-mobile-link">{link.label}</a></li>
     ))}
   </ul>
-  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary nav-mobile-cta">
+  <button class="btn btn-primary nav-mobile-cta" onclick="window.dispatchEvent(new Event('open-signup-wizard')); document.getElementById('nav-mobile')?.classList.remove('nav-mobile-overlay--open'); document.getElementById('nav-hamburger')?.classList.remove('nav__hamburger--active'); document.body.classList.remove('no-scroll');">
     Únete ahora
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-  </a>
+  </button>
 </div>
 
 <script>

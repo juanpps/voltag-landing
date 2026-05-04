@@ -2,7 +2,7 @@
 const faqs = [
   {
     q: "¿Qué horarios tiene el gimnasio?",
-    a: "¡Abrimos temprano! Desde las 5:30 AM de Lunes a Viernes (jornada continua hasta las 10:00 PM). Los sábados estamos de 6:00 AM a 4:00 PM y los domingos de 8:00 AM a 12:00 PM. Siempre hay un entrenador disponible."
+    a: "¡Abrimos temprano! Desde las 5:30 AM de Lunes a Viernes (jornada continua hasta las 10:00 PM). Los sábados estamos de 8:00 AM a 2:00 PM. Los domingos estamos cerrados. Siempre hay un entrenador disponible."
   },
   {
     q: "¿Cuánto cuesta la mensualidad y qué incluye?",
@@ -10,7 +10,7 @@ const faqs = [
   },
   {
     q: "¿Necesito pagar matrícula o inscripción?",
-    a: "No. En Voltag Gym creemos en pagos transparentes. Solo pagas tu plan (Mensual, Trimestral, Semestral) y entras inmediatamente. Cero pagos ocultos."
+    a: "<strong style='color: #e63946; font-size: 1.1em;'>¡INSCRIPCIÓN GRATUITA!</strong> En Voltag Gym no pagas matrícula ni inscripción. Solo eliges tu plan (Mensual, Trimestral, Semestral) y entras inmediatamente. Cero pagos ocultos, cero sorpresas."
   },
   {
     q: "¿Dónde están ubicados exactamente?",
@@ -42,7 +42,7 @@ const faqs = [
             <span class="faq__icon">+</span>
           </summary>
           <div class="faq__a">
-            <p>{faq.a}</p>
+            <p set:html={faq.a} />
           </div>
         </details>
       ))}
