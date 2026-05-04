@@ -1,0 +1,241 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import CtaStrip from '../../components/CtaStrip.astro';
+import { db } from '../../utils/firebase.client';
+import { doc, getDoc } from 'firebase/firestore';
+
+export const prerender = false; // SSR
+
+const { slug } = Astro.params;
+
+let post = null;
+try {
+  const docRef = doc(db, 'blog_posts', slug);
+  const docSnap = await getDoc(docRef);
+  
+  if (docSnap.exists()) {
+    post = { id: docSnap.id, ...docSnap.data() };
+  } else {
+    return Astro.redirect('/404');
+  }
+} catch (error) {
+  console.error("Error fetching blog post:", error);
+  return Astro.redirect('/404');
+}
+
+// Simple Markdown to HTML parser for the blog content
+const parseMarkdown = (text) => {
+  if (!text) return '';
+  let html = text
+    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+    .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+    .replace(/\*(.*)\*/gim, '<em>$1</em>')
+    .replace(/!\[(.*?)\]\((.*?)\)/gim, "<img alt='$1' src='$2' />")
+    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2'>$1</a>")
+    .replace(/\n$/gim, '<br />');
+
+  // Wrap paragraphs
+  html = html.split('\n\n').map(p => {
+    if (p.trim().startsWith('<h') || p.trim().startsWith('<img')) return p;
+    return `<p>${p}</p>`;
+  }).join('');
+
+  return html;
+};
+
+const contentHtml = parseMarkdown(post.content);
+---
+
+<Layout 
+  title={`${post.title} | Blog Voltag Gym`} 
+  description={post.excerpt}
+  ogImage={post.imageUrl || '/og-image.jpg'}
+>
+  <Nav />
+  
+  <main class="blog-post">
+    <article class="container">
+      <header class="post-header">
+        <a href="/blog" class="back-link">← Volver al Blog</a>
+        <div class="post-meta">
+          <span class="post-date">{new Date(post.createdAt).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+          <span class="post-author">Por: {post.author}</span>
+        </div>
+        <h1 class="post-title">{post.title}</h1>
+      </header>
+
+      {post.imageUrl && (
+        <div class="post-hero-image">
+          <img src={post.imageUrl} alt={post.title} />
+        </div>
+      )}
+
+      <div class="post-content" set:html={contentHtml}></div>
+
+      {post.keywords && (
+        <div class="post-tags">
+          {post.keywords.split(',').map(tag => (
+            <span class="tag">{tag.trim()}</span>
+          ))}
+        </div>
+      )}
+    </article>
+  </main>
+
+  <CtaStrip />
+  <Footer />
+</Layout>
+
+<style is:global>
+  .blog-post {
+    padding-top: 140px;
+    padding-bottom: 80px;
+    background: var(--dark);
+    min-height: 100vh;
+  }
+
+  .post-header {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    text-align: center;
+  }
+
+  .back-link {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 24px;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: var(--white);
+  }
+
+  .post-meta {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 0.9rem;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .post-author {
+    color: var(--gray);
+  }
+
+  .post-title {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    line-height: 1.2;
+    color: var(--white);
+    margin: 0;
+  }
+
+  .post-hero-image {
+    max-width: 1000px;
+    margin: 0 auto 60px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .post-hero-image img {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .post-content {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--gray);
+  }
+
+  .post-content h2 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--white);
+    margin: 40px 0 20px;
+  }
+
+  .post-content h3 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--white);
+    margin: 30px 0 16px;
+  }
+
+  .post-content p {
+    margin-bottom: 24px;
+  }
+
+  .post-content ul, .post-content ol {
+    margin-bottom: 24px;
+    padding-left: 20px;
+  }
+
+  .post-content li {
+    margin-bottom: 10px;
+  }
+
+  .post-content strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .post-content a {
+    color: var(--red);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .post-content a:hover {
+    border-bottom-color: var(--red);
+  }
+
+  .post-tags {
+    max-width: 800px;
+    margin: 60px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .tag {
+    background: rgba(255,255,255,0.05);
+    color: #aaa;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .post-title {
+      font-size: 2rem;
+    }
+    .post-content {
+      font-size: 1.05rem;
+    }
+    .post-hero-image {
+      margin-bottom: 40px;
+      border-radius: 8px;
+    }
+  }
+</style>

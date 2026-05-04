@@ -6,6 +6,7 @@ import { auth } from '../../utils/firebase.client';
 import SettingsModule from './SettingsModule';
 import PlansModule from './PlansModule';
 import PromotionsModule from './PromotionsModule';
+import BlogModule from './BlogModule';
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
@@ -95,6 +96,12 @@ export default function DashboardLayout() {
           >
             Redes
           </NavLink>
+          <NavLink 
+            to="/blog" 
+            style={({ isActive }) => ({ ...styles.navLink, ...(isActive ? styles.navLinkActive : {}) })}
+          >
+            Blog SEO
+          </NavLink>
         </nav>
 
         <div style={styles.bottomSection}>
@@ -112,6 +119,7 @@ export default function DashboardLayout() {
           <Route path="promotions" element={<PromotionsModule />} />
           <Route path="plans" element={<PlansModule />} />
           <Route path="settings" element={<SettingsModule />} />
+          <Route path="blog" element={<BlogModule />} />
         </Routes>
       </main>
     </div>

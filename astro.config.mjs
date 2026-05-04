@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://voltag-landing.vercel.app',
-  output: 'static',
+  output: 'hybrid',
   integrations: [react(), sitemap()],
   adapter: vercel(),
   vite: {

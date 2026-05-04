@@ -1,0 +1,186 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { db } from '../../utils/firebase.client';
+import { collection, getDocs } from 'firebase/firestore';
+
+export const prerender = false; // SSR
+
+let posts = [];
+try {
+  const snapshot = await getDocs(collection(db, 'blog_posts'));
+  posts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  posts.sort((a, b) => b.createdAt - a.createdAt);
+} catch (error) {
+  console.error("Error fetching blog posts:", error);
+}
+
+const title = "Blog Voltag Gym | Entrenamiento, Nutrición y Fitness en Candelaria";
+const description = "Descubre consejos de entrenamiento, rutinas para ganar masa muscular, nutrición y todo lo que necesitas saber para transformar tu cuerpo en Voltag Gym.";
+---
+
+<Layout title={title} description={description}>
+  <Nav />
+  
+  <main class="blog-archive">
+    <div class="container">
+      <header class="blog-header reveal">
+        <div class="section-badge">Blog & Consejos</div>
+        <h1 class="section-title">El Conocimiento es <span>Poder</span></h1>
+        <p class="section-subtitle">
+          Aprende a entrenar mejor, comer más sano y alcanzar tus objetivos con los consejos de nuestros expertos.
+        </p>
+      </header>
+
+      {posts.length === 0 ? (
+        <div class="empty-state reveal">
+          <h2>Próximamente...</h2>
+          <p>Estamos preparando el mejor contenido fitness para ti.</p>
+        </div>
+      ) : (
+        <div class="blog-grid reveal">
+          {posts.map(post => (
+            <article class="blog-card">
+              <a href={`/blog/${post.slug}`} class="blog-card__link">
+                {post.imageUrl && (
+                  <div class="blog-card__image-wrapper">
+                    <img src={post.imageUrl} alt={post.title} class="blog-card__image" loading="lazy" />
+                  </div>
+                )}
+                <div class="blog-card__content">
+                  <span class="blog-card__date">
+                    {new Date(post.createdAt).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </span>
+                  <h2 class="blog-card__title">{post.title}</h2>
+                  <p class="blog-card__excerpt">{post.excerpt}</p>
+                  <span class="blog-card__read-more">Leer Artículo →</span>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .blog-archive {
+    padding-top: 160px;
+    padding-bottom: 100px;
+    background: var(--dark);
+    min-height: 100vh;
+  }
+
+  .blog-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 0;
+    color: var(--gray);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+  }
+
+  .blog-card {
+    background: var(--black-pure);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  }
+
+  .blog-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(212, 25, 32, 0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  .blog-card__link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .blog-card__image-wrapper {
+    height: 220px;
+    overflow: hidden;
+  }
+
+  .blog-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+
+  .blog-card:hover .blog-card__image {
+    transform: scale(1.05);
+  }
+
+  .blog-card__content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .blog-card__date {
+    font-size: 0.8rem;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .blog-card__title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .blog-card__excerpt {
+    font-size: 0.9rem;
+    color: var(--gray);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .blog-card__read-more {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--white);
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s;
+    margin-top: auto;
+  }
+
+  .blog-card:hover .blog-card__read-more {
+    color: var(--red);
+  }
+
+  @media (max-width: 768px) {
+    .blog-archive {
+      padding-top: 120px;
+    }
+  }
+</style>
