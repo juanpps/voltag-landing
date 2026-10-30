@@ -4,29 +4,13 @@ import logoImg from '../assets/images/logo/logo-white.png';
 
 import DynamicSocials from './DynamicSocials.jsx';
 import DynamicContactLinks from './DynamicContactLinks.jsx';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../utils/firebase.client';
+import defaultSettings from '../data/settings.json';
 
-let whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
-let instagramUrl = import.meta.env.PUBLIC_INSTAGRAM_URL || 'https://www.instagram.com/voltag_gym';
-let tiktokUrl = import.meta.env.PUBLIC_TIKTOK_URL || 'https://www.tiktok.com/@voltag_gym';
-let mapsUrl = import.meta.env.PUBLIC_GOOGLE_MAPS_URL || 'https://maps.app.goo.gl/oDdrQTzTKmmzR4d96';
-let globalAddress = 'Cl 12 # 20 Oeste - 10';
-
-const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1000));
-
-try {
-  const globalRef = doc(db, 'configuracion', 'global');
-  const globalSnap = await Promise.race([getDoc(globalRef), timeoutPromise]);
-  if (globalSnap && globalSnap.exists()) {
-    const data = globalSnap.data();
-    if (data.whatsapp) whatsappNumber = data.whatsapp;
-    if (data.instagram) instagramUrl = data.instagram;
-    if (data.tiktok) tiktokUrl = data.tiktok;
-    if (data.mapsUrl) mapsUrl = data.mapsUrl;
-    if (data.address) globalAddress = data.address;
-  }
-} catch(e) { /* fallback active */ }
+const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || defaultSettings.whatsapp || '573180046952';
+const instagramUrl = import.meta.env.PUBLIC_INSTAGRAM_URL || defaultSettings.instagram || 'https://www.instagram.com/voltag_gym';
+const tiktokUrl = import.meta.env.PUBLIC_TIKTOK_URL || defaultSettings.tiktok || 'https://www.tiktok.com/@voltag_gym';
+const mapsUrl = import.meta.env.PUBLIC_GOOGLE_MAPS_URL || defaultSettings.mapsUrl || 'https://maps.app.goo.gl/oDdrQTzTKmmzR4d96';
+const globalAddress = defaultSettings.address || 'Cl 12 # 20 Oeste - 10, Manzanares Sector 17, Candelaria';
 
 const whatsappUrl = `https://wa.me/${whatsappNumber}`;
 

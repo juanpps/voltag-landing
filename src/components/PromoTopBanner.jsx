@@ -1,31 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from '../utils/firebase.client';
+import { getPromotions } from '../utils/content';
 
 export default function PromoTopBanner() {
   const [promo, setPromo] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 1. SILENCE IN ADMIN
+    // 1. Silence in admin
     if (window.location.pathname.startsWith('/admin')) {
-      setLoading(false);
       return;
     }
 
-    const unsub = onSnapshot(doc(db, 'configuracion', 'promociones'), (doc) => {
-      if (doc.exists() && doc.data().bannerActive) {
-        setPromo(doc.data());
-      } else {
-        setPromo(null);
-      }
-      setLoading(false);
-    });
+    // 2. Load from local CMS
+    const currentPromos = getPromotions();
+    if (currentPromos && currentPromos.bannerActive) {
+      setPromo(currentPromos);
+    }
 
-    return () => unsub();
+    // 3. Listen to local CMS updates
+    const handleUpdate = (e) => {
+      if (e.detail?.type === 'promotions') {
+        if (e.detail.data?.bannerActive) {
+          setPromo(e.detail.data);
+        } else {
+          setPromo(null);
+        }
+      }
+    };
+
+    window.addEventListener('voltag-cms-update', handleUpdate);
+    return () => window.removeEventListener('voltag-cms-update', handleUpdate);
   }, []);
 
-  if (loading || !promo) return null;
+  if (!promo || !promo.bannerActive) return null;
 
   return (
     <div className="promo-pill-container">
@@ -58,7 +64,7 @@ export default function PromoTopBanner() {
         .promo-pill__text {
           position: relative;
           z-index: 1;
-          font-family: 'Barlow Condensed', sans-serif;
+          font-family: var(--font-heading, 'Outfit', sans-serif);
           font-size: 0.75rem;
           font-weight: 700;
           letter-spacing: 2px;

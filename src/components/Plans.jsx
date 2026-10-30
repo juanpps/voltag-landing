@@ -1,49 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { collection, doc, getDoc, onSnapshot } from 'firebase/firestore';
-import { db } from '../utils/firebase.client';
+import { getPlans, getSettings } from '../utils/content';
 
 export default function Plans() {
   const [plans, setPlans] = useState([]);
   const [whatsapp, setWhatsapp] = useState('573180046952');
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 1. Listen to Global Config for WhatsApp
-    const unsubGlobal = onSnapshot(doc(db, 'configuracion', 'global'), (doc) => {
-      if (doc.exists() && doc.data().whatsapp) {
-        setWhatsapp(doc.data().whatsapp);
-      }
-    });
+    // 1. Initial load from local CMS (instant, 0ms)
+    setPlans(getPlans());
+    const settings = getSettings();
+    if (settings && settings.whatsapp) {
+      setWhatsapp(settings.whatsapp);
+    }
 
-    // 2. Listen to Plans collection
-    const unsubPlans = onSnapshot(collection(db, "planes"), (snapshot) => {
-      let plansArr = [];
-      snapshot.forEach((doc) => {
-        plansArr.push({ id: doc.id, ...doc.data() });
-      });
-      
-      if (plansArr.length > 0) {
-        plansArr.sort((a,b) => a.id.localeCompare(b.id));
-        setPlans(plansArr);
+    // 2. Listen to real-time local CMS updates from Admin
+    const handleUpdate = (e) => {
+      if (e.detail?.type === 'plans') {
+        setPlans(e.detail.data);
+      } else if (e.detail?.type === 'settings' && e.detail.data?.whatsapp) {
+        setWhatsapp(e.detail.data.whatsapp);
       }
-      setLoading(false);
-    });
-
-    return () => {
-      unsubGlobal();
-      unsubPlans();
     };
+
+    window.addEventListener('voltag-cms-update', handleUpdate);
+    return () => window.removeEventListener('voltag-cms-update', handleUpdate);
   }, []);
 
-  if (loading) return (
-    <section className="plans" id="planes">
-      <div className="container">
-        <p style={{ textAlign: 'center', color: '#888' }}>Cargando planes...</p>
-      </div>
-    </section>
+  const checkIcon = (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+    </svg>
   );
-
-  const checkIcon = <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>;
 
   return (
     <section className="plans" id="planes">
@@ -59,7 +46,11 @@ export default function Plans() {
 
         <div className="plans__grid">
           {plans.map((plan, i) => (
-            <div key={plan.id} className={`plans__card ${plan.featured ? 'plans__card--featured' : ''} reveal visible`} style={{ transitionDelay: `${i * 0.12}s` }}>
+            <div 
+              key={plan.id} 
+              className={`plans__card ${plan.featured ? 'plans__card--featured' : ''} reveal visible`} 
+              style={{ transitionDelay: `${i * 0.1}s` }}
+            >
               {plan.badge && (
                 <div className="plans__card-badge">{plan.badge}</div>
               )}

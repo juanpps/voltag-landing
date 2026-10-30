@@ -1,43 +1,58 @@
 import React, { useState, useEffect } from 'react';
-import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from '../utils/firebase.client';
+import { getPromotions } from '../utils/content';
 
 export default function PromoModal() {
   const [promo, setPromo] = useState(null);
   const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 1. SILENCE IN ADMIN
+    // 1. Silence in admin
     if (window.location.pathname.startsWith('/admin')) {
-      setLoading(false);
       return;
     }
 
-    // 2. Real-time listener
-    const unsub = onSnapshot(doc(db, 'configuracion', 'promociones'), (doc) => {
-      if (doc.exists() && doc.data().modalActive) {
-        setPromo(doc.data());
-        // Show after a small delay for better UX
-        setTimeout(() => setVisible(true), 1500);
-      } else {
-        setPromo(null);
-        setVisible(false);
-      }
-      setLoading(false);
-    });
+    // 2. Load from local CMS
+    const currentPromos = getPromotions();
+    if (currentPromos && currentPromos.modalActive) {
+      setPromo(currentPromos);
+      setTimeout(() => setVisible(true), 1500);
+    }
 
-    return () => unsub();
+    // 3. Listen to local CMS updates
+    const handleUpdate = (e) => {
+      if (e.detail?.type === 'promotions') {
+        if (e.detail.data?.modalActive) {
+          setPromo(e.detail.data);
+          setVisible(true);
+        } else {
+          setPromo(null);
+          setVisible(false);
+        }
+      }
+    };
+
+    window.addEventListener('voltag-cms-update', handleUpdate);
+    return () => window.removeEventListener('voltag-cms-update', handleUpdate);
   }, []);
 
-  if (loading || !promo || !visible) return null;
+  if (!promo || !visible) return null;
 
   return (
-    <div id="promo-modal-overlay" className="modal-overlay" onClick={(e) => {
-      if (e.target.id === 'promo-modal-overlay') setVisible(false);
-    }}>
+    <div 
+      id="promo-modal-overlay" 
+      className="modal-overlay" 
+      onClick={(e) => {
+        if (e.target.id === 'promo-modal-overlay') setVisible(false);
+      }}
+    >
       <div className="modal-content">
-        <button className="modal-close" onClick={() => setVisible(false)}>&times;</button>
+        <button 
+          className="modal-close" 
+          onClick={() => setVisible(false)}
+          aria-label="Cerrar modal"
+        >
+          &times;
+        </button>
         
         {promo.modalImage && (
           <img src={promo.modalImage} alt={promo.modalTitle} className="modal-img" />
@@ -46,8 +61,13 @@ export default function PromoModal() {
         <div className="modal-body">
           <h2>{promo.modalTitle}</h2>
           <p>{promo.modalText}</p>
-          <a href={promo.modalLink} target="_blank" rel="noopener noreferrer" className="btn btn-primary cta-btn">
-            {promo.modalCta}
+          <a 
+            href={promo.modalLink} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="btn btn-primary cta-btn"
+          >
+            {promo.modalCta || 'Aprovechar Oferta'}
           </a>
         </div>
       </div>
@@ -98,10 +118,13 @@ export default function PromoModal() {
           box-shadow: 0 4px 12px rgba(0,0,0,0.5);
           transition: transform 0.2s;
         }
+        .modal-close:hover {
+          transform: scale(1.1);
+        }
         .modal-img {
           width: 100%;
-          height: 55vh;
-          object-fit: contain;
+          height: 45vh;
+          object-fit: cover;
           display: block;
           border-top-left-radius: 12px;
           border-top-right-radius: 12px;
@@ -115,10 +138,10 @@ export default function PromoModal() {
           overflow: hidden;
         }
         .modal-body h2 {
-          font-family: 'Barlow Condensed', sans-serif;
+          font-family: var(--font-heading, 'Outfit', sans-serif);
           color: #fff;
           margin-top: 0;
-          font-size: 2.2rem;
+          font-size: 2rem;
           text-transform: uppercase;
           text-shadow: 0 0 20px rgba(212, 25, 32, 0.4);
           line-height: 1.1;
@@ -127,7 +150,7 @@ export default function PromoModal() {
           color: #ccc;
           line-height: 1.6;
           margin-bottom: 24px;
-          font-size: 1.05rem;
+          font-size: 1rem;
         }
         @keyframes popIn {
           0% { opacity: 0; transform: translateY(20px) scale(0.95); }

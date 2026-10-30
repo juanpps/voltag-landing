@@ -2,22 +2,10 @@
 import { Image } from 'astro:assets';
 import logoImg from '../assets/images/logo/logo-white.png';
 
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../utils/firebase.client';
+import defaultSettings from '../data/settings.json';
 
-let whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || '573180046952';
-
-const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1000));
-
-try {
-  const globalRef = doc(db, 'configuracion', 'global');
-  const globalSnap = await Promise.race([getDoc(globalRef), timeoutPromise]);
-  if (globalSnap && globalSnap.exists() && globalSnap.data().whatsapp) {
-    whatsappNumber = globalSnap.data().whatsapp;
-  }
-} catch(e) { /* fallback active */ }
-
-const whatsappUrl = '#';
+const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER || defaultSettings.whatsapp || '573180046952';
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Hola%20Voltag!%20Quiero%20informaci%C3%B3n`;
 
 const navLinks = [
   { label: 'Nosotros', href: '/#nosotros' },

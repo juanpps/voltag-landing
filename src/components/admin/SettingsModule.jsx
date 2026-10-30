@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '../../utils/firebase.client';
+import { getSettings, saveSettingsLocally } from '../../utils/content';
 
 export default function SettingsModule() {
   const [settings, setSettings] = useState({
@@ -8,181 +7,180 @@ export default function SettingsModule() {
     tiktok: '',
     whatsapp: '',
     mapsUrl: '',
-    address: ''
+    address: '',
+    scheduleWeekdays: '',
+    scheduleSaturday: '',
+    scheduleSunday: '',
   });
-  const [loading, setLoading] = useState(true);
+
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    async function loadData() {
-      try {
-        const docRef = doc(db, 'configuracion', 'global');
-        
-        // Timeout to prevent infinite loading if Firestore is disabled
-        const fetchPromise = getDoc(docRef);
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('timeout')), 2000)
-        );
-        
-        const docSnap = await Promise.race([fetchPromise, timeoutPromise]);
-        
-        if (docSnap && docSnap.exists()) {
-          setSettings(docSnap.data());
-        }
-      } catch (err) {
-        console.error("Error loading settings (might be disabled):", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadData();
+    setSettings(getSettings());
   }, []);
 
-  const handleSave = async (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSettings(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = (e) => {
     e.preventDefault();
     setSaving(true);
-    setMessage('');
     try {
-      const savePromise = setDoc(doc(db, 'configuracion', 'global'), settings);
-      const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000));
-      await Promise.race([savePromise, timeoutPromise]);
-      setMessage('✅ Configuración guardada exitosamente.');
+      saveSettingsLocally(settings);
+      setMessage('✅ Configuración guardada y activa en toda la web.');
+      setTimeout(() => setMessage(''), 4000);
     } catch (err) {
-      console.error(err);
-      setMessage('❌ Error al guardar. Revisa los permisos de Firebase.');
+      setMessage('❌ Error: ' + err.message);
     } finally {
       setSaving(false);
-      setTimeout(() => setMessage(''), 3000);
     }
   };
 
-  const handleChange = (e) => {
-    setSettings(prev => ({...prev, [e.target.name]: e.target.value}));
+  const downloadJson = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(settings, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "settings.json");
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
   };
 
-  if (loading) return <div style={{ color: '#aaa' }}>Cargando datos...</div>;
-
   return (
-    <div className="admin-module">
-      <h1 style={styles.title}>Redes Sociales y Contacto</h1>
-      <p style={styles.subtitle}>Actualiza los enlaces que aparecen en el menú principal, pie de página y botones de WhatsApp.</p>
-      
-      <form onSubmit={handleSave} style={styles.form}>
-        
-        <div style={styles.grid}>
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Número de WhatsApp (Ej: 573180046952)</label>
-            <input 
-              name="whatsapp" value={settings.whatsapp} onChange={handleChange}
-              style={styles.input} placeholder="Sin el + inicial"
-            />
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Enlace de Instagram</label>
-            <input 
-              name="instagram" value={settings.instagram} onChange={handleChange}
-              style={styles.input} placeholder="https://instagram.com/..."
-            />
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Enlace de TikTok</label>
-            <input 
-              name="tiktok" value={settings.tiktok} onChange={handleChange}
-              style={styles.input} placeholder="https://tiktok.com/@..."
-            />
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>URL de Google Maps</label>
-            <input 
-              name="mapsUrl" value={settings.mapsUrl} onChange={handleChange}
-              style={styles.input} placeholder="https://maps.app.goo.gl/..."
-            />
-          </div>
-          
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Dirección Física</label>
-            <input 
-              name="address" value={settings.address} onChange={handleChange}
-              style={styles.input} placeholder="Cl 12 # 20 Oeste - 10..."
-            />
-          </div>
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
+        <div>
+          <h1 style={{ color: '#fff', fontSize: '1.8rem', margin: '0 0 6px 0' }}>Redes, Contacto y Ubicación</h1>
+          <p style={{ color: '#888', margin: 0, fontSize: '0.9rem' }}>
+            Gestiona los enlaces globales de WhatsApp, Instagram, TikTok y Google Maps.
+          </p>
         </div>
-
-        <div style={styles.footer}>
-          {message && <span style={styles.message}>{message}</span>}
-          <button type="submit" style={styles.button} disabled={saving}>
-            {saving ? 'Guardando...' : 'Guardar Cambios'}
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <button 
+            type="button"
+            onClick={downloadJson}
+            style={{ ...btnStyle, background: '#222', border: '1px solid rgba(255,255,255,0.2)' }}
+            title="Descarga el archivo JSON para el repositorio"
+          >
+            📥 Descargar settings.json
           </button>
+          <button type="submit" form="settings-form" disabled={saving} style={btnStyle}>
+            {saving ? 'Guardando...' : '💾 Guardar Cambios'}
+          </button>
+        </div>
+      </div>
+
+      {message && (
+        <div style={{ padding: '12px 16px', background: message.startsWith('✅') ? 'rgba(74, 222, 128, 0.1)' : 'rgba(212, 25, 32, 0.1)', borderLeft: '4px solid', borderColor: message.startsWith('✅') ? '#4ade80' : '#d41920', color: '#fff', marginBottom: '24px' }}>
+          {message}
+        </div>
+      )}
+
+      <form id="settings-form" onSubmit={handleSave} style={cardStyle}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+          <div>
+            <label style={labelStyle}>Número de WhatsApp Oficial (sin '+')</label>
+            <input 
+              type="text" 
+              name="whatsapp" 
+              value={settings.whatsapp || ''} 
+              onChange={handleChange}
+              placeholder="573180046952"
+              style={inputStyle}
+            />
+          </div>
+
+          <div>
+            <label style={labelStyle}>Dirección Física</label>
+            <input 
+              type="text" 
+              name="address" 
+              value={settings.address || ''} 
+              onChange={handleChange}
+              placeholder="Cl 12 # 20 Oeste - 10, Manzanares Sector 17"
+              style={inputStyle}
+            />
+          </div>
+
+          <div>
+            <label style={labelStyle}>Enlace a Instagram</label>
+            <input 
+              type="url" 
+              name="instagram" 
+              value={settings.instagram || ''} 
+              onChange={handleChange}
+              placeholder="https://www.instagram.com/voltag_gym"
+              style={inputStyle}
+            />
+          </div>
+
+          <div>
+            <label style={labelStyle}>Enlace a TikTok</label>
+            <input 
+              type="url" 
+              name="tiktok" 
+              value={settings.tiktok || ''} 
+              onChange={handleChange}
+              placeholder="https://www.tiktok.com/@voltag_gym"
+              style={inputStyle}
+            />
+          </div>
+
+          <div style={{ gridColumn: '1 / -1' }}>
+            <label style={labelStyle}>Enlace a Google Maps</label>
+            <input 
+              type="url" 
+              name="mapsUrl" 
+              value={settings.mapsUrl || ''} 
+              onChange={handleChange}
+              placeholder="https://maps.app.goo.gl/..."
+              style={inputStyle}
+            />
+          </div>
         </div>
       </form>
     </div>
   );
 }
 
-const styles = {
-  title: {
-    fontFamily: 'var(--font-heading)',
-    fontSize: '2rem',
-    margin: '0 0 8px 0',
-    color: '#fff'
-  },
-  subtitle: {
-    color: '#888',
-    marginBottom: '32px'
-  },
-  form: {
-    background: '#0f0f0f',
-    border: '1px solid rgba(255,255,255,0.05)',
-    padding: '32px',
-    borderRadius: '12px'
-  },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '24px',
-    marginBottom: '32px'
-  },
-  inputGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px'
-  },
-  label: {
-    color: '#aaa',
-    fontSize: '0.8rem',
-    fontWeight: '600'
-  },
-  input: {
-    background: '#1a1a1a',
-    border: '1px solid rgba(255,255,255,0.1)',
-    padding: '12px 16px',
-    color: '#fff',
-    borderRadius: '6px',
-    outline: 'none'
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    gap: '16px',
-    borderTop: '1px solid rgba(255,255,255,0.05)',
-    paddingTop: '24px'
-  },
-  button: {
-    background: '#d41920',
-    color: '#fff',
-    border: 'none',
-    padding: '12px 24px',
-    borderRadius: '6px',
-    fontWeight: 'bold',
-    cursor: 'pointer'
-  },
-  message: {
-    color: '#fff',
-    fontSize: '0.9rem'
-  }
+const cardStyle = {
+  background: '#0d0d0d',
+  border: '1px solid rgba(255,255,255,0.06)',
+  padding: '28px',
+  borderRadius: '4px',
+};
+
+const labelStyle = {
+  display: 'block',
+  fontSize: '0.75rem',
+  color: '#888',
+  textTransform: 'uppercase',
+  letterSpacing: '1px',
+  marginBottom: '6px',
+};
+
+const inputStyle = {
+  width: '100%',
+  background: '#151515',
+  border: '1px solid rgba(255,255,255,0.1)',
+  color: '#fff',
+  padding: '10px 12px',
+  fontSize: '0.9rem',
+  boxSizing: 'border-box',
+  outline: 'none',
+};
+
+const btnStyle = {
+  background: '#d41920',
+  color: '#fff',
+  border: 'none',
+  padding: '10px 20px',
+  fontFamily: 'inherit',
+  fontWeight: 'bold',
+  cursor: 'pointer',
+  fontSize: '0.85rem',
+  letterSpacing: '1px',
 };

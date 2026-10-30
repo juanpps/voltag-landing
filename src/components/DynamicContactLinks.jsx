@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from '../utils/firebase.client';
+import { getSettings } from '../utils/content';
 
 export default function DynamicContactLinks() {
   const [socials, setSocials] = useState({
@@ -10,12 +9,19 @@ export default function DynamicContactLinks() {
   });
 
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, 'configuracion', 'global'), (doc) => {
-      if (doc.exists()) {
-        setSocials(prev => ({ ...prev, ...doc.data() }));
+    const currentSettings = getSettings();
+    if (currentSettings) {
+      setSocials(prev => ({ ...prev, ...currentSettings }));
+    }
+
+    const handleUpdate = (e) => {
+      if (e.detail?.type === 'settings') {
+        setSocials(prev => ({ ...prev, ...e.detail.data }));
       }
-    });
-    return () => unsub();
+    };
+
+    window.addEventListener('voltag-cms-update', handleUpdate);
+    return () => window.removeEventListener('voltag-cms-update', handleUpdate);
   }, []);
 
   return (

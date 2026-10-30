@@ -1,19 +1,15 @@
-import React from 'react';
-import { Routes, Route, NavLink, useNavigate } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../utils/firebase.client';
-
 import SettingsModule from './SettingsModule';
 import PlansModule from './PlansModule';
 import PromotionsModule from './PromotionsModule';
 import BlogModule from './BlogModule';
 
-export default function DashboardLayout() {
+export default function DashboardLayout({ onLogout }) {
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    // Router will automatically kick user out to /login
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    }
   };
 
   return (
