@@ -7,7 +7,9 @@ export default defineConfig({
   site: 'https://voltag-landing.vercel.app',
   output: 'static',
   integrations: [react(), sitemap()],
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+  }),
   vite: {
     ssr: {
       noExternal: [],
